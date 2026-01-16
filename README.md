@@ -1,6 +1,8 @@
 # Next Fetch Architecture
 
-This project provides RESTful API examples using Next.js. It demonstrates how to create and manage API endpoints effectively.
+A Next.js App Router reference implementation demonstrating a robust, type-safe architecture for fetching and mutating data from external REST APIs.
+
+It establishes structured patterns for API integration using server-side fetching, runtime validation with Zod, and a functional error handling strategy using a Result type, ensuring reliable data flow and separation of concerns.
 
 ## Before You Begin
 
