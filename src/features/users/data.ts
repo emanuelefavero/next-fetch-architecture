@@ -2,11 +2,11 @@ import { z } from 'zod'
 import { Result, ok, err } from '@/lib/result'
 import { User, UserId, CreateUser, UpdateUser } from './types'
 import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
-import { API_BASE_URL } from '@/config/env'
 import { buildQueryParams } from '@/lib/api/utils'
 import { QueryOptions } from '@/lib/api/types'
+import { ENDPOINTS } from '@/lib/api/endpoints'
 
-const endpoint = `${API_BASE_URL}/users`
+const endpoint = ENDPOINTS.users
 
 /**
  * Fetches all users
