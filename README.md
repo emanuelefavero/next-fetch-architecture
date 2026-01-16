@@ -58,3 +58,15 @@ This project uses [MockAPI](https://mockapi.io/) for simulating backend data. To
   ```
 
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## License
+
+- [MIT](LICENSE.md)
+
+&nbsp;
+
+---
+
+&nbsp;
+
+[**Go To Top &nbsp; ⬆️**](#next-fetch-architecture)
