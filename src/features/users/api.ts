@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Result, ok, err } from '@/lib/result'
+import { Result, ok, err } from '@/lib/api/result'
 import { User, UserId, CreateUser, UpdateUser } from './types'
 import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
 import { buildQueryParams } from '@/lib/api/utils'
