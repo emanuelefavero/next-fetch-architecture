@@ -38,6 +38,15 @@ export const UserSchema = z.object({
     .max(150, 'Age must be at most 150'),
 })
 
+export const GetUsersOptionsSchema = z
+  .object({
+    page: z.number().int().min(1).optional(),
+    limit: z.number().int().min(1).max(100).optional(),
+    sortBy: z.string().optional(),
+    order: z.enum(['asc', 'desc']).optional(),
+  })
+  .partial()
+
 /**
  * Zod schema for validating data required to create a new user
  * @see {@link CreateUser} for the corresponding TypeScript type
