@@ -6,7 +6,7 @@ This project provides RESTful API examples using Next.js. It demonstrates how to
 
 This project uses [MockAPI](https://mockapi.io/) for simulating backend data. To get started, you'll need to create an account on MockAPI, create an endpoint, and obtain your API secret to put in the `.env` file.
 
-### API Endpoints
+### Setting up MockAPI
 
 - Create a new project on MockAPI.
 - Create a new resource called `users`
