@@ -63,15 +63,3 @@ export const CreateUserSchema = UserSchema.omit({
  * })
  */
 export const UpdateUserSchema = CreateUserSchema.partial()
-
-/**
- * Zod schema for validating parameters required to delete a user
- * @see {@link DeleteUserParams} for the corresponding TypeScript type
- * @example
- * const params = deleteUserParamsSchema.parse({
- *  id: '1'
- * })
- */
-export const deleteUserParamsSchema = z.object({
-  id: z.string().min(1, 'ID is required'),
-})

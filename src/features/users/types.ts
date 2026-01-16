@@ -1,10 +1,5 @@
 import { z } from 'zod'
-import {
-  UserSchema,
-  CreateUserSchema,
-  UpdateUserSchema,
-  deleteUserParamsSchema,
-} from './schemas'
+import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
 
 /**
  * Represents a complete user entity with all required fields
@@ -19,6 +14,15 @@ import {
  * }
  */
 export type User = z.infer<typeof UserSchema>
+
+/**
+ * Represents the unique identifier for a user, derived from the UserSchema
+ * Useful for referencing users by ID
+ * @see {@link UserSchema} for the source schema
+ * @example
+ * const userId: UserId = '1'
+ */
+export type UserId = z.infer<typeof UserSchema.shape.id>
 
 /**
  * Represents the data required to create a new user
@@ -42,13 +46,3 @@ export type CreateUser = z.infer<typeof CreateUserSchema>
  * }
  */
 export type UpdateUser = z.infer<typeof UpdateUserSchema>
-
-/**
- * Represents the parameters required to delete a user
- * @see {@link deleteUserParamsSchema} for validation details
- * @example
- * const params: DeleteUserParams = {
- *  id: '1'
- * }
- */
-export type DeleteUserParams = z.infer<typeof deleteUserParamsSchema>
