@@ -1,10 +1,10 @@
-import { z } from 'zod'
-import { Result, ok, err } from '@/lib/api/result'
-import { User, UserId, CreateUser, UpdateUser } from './types'
-import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
-import { buildQueryParams } from '@/lib/api/utils'
-import { QueryOptions } from '@/lib/api/types'
 import { ENDPOINTS } from '@/lib/api/endpoints'
+import { Result, err, ok } from '@/lib/api/result'
+import { QueryOptions } from '@/lib/api/types'
+import { buildQueryParams } from '@/lib/api/utils'
+import { z } from 'zod'
+import { CreateUserSchema, UpdateUserSchema, UserSchema } from './schemas'
+import { CreateUser, UpdateUser, User, UserId } from './types'
 
 const endpoint = ENDPOINTS.users
 
@@ -12,7 +12,7 @@ const endpoint = ENDPOINTS.users
  * Fetches all users
  */
 export async function getUsers(
-  options?: QueryOptions<User>
+  options?: QueryOptions<User>,
 ): Promise<Result<User[], string>> {
   const errorTitle = 'Error fetching users'
 
@@ -42,7 +42,7 @@ export async function getUsers(
       : err(`${errorTitle}: ${users.error.message}`)
   } catch (error) {
     return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle
+      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
     )
   }
 }
@@ -73,7 +73,7 @@ export async function getUserById(id: UserId): Promise<Result<User, string>> {
       : err(`${errorTitle}: ${user.error.message}`)
   } catch (error) {
     return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle
+      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
     )
   }
 }
@@ -82,7 +82,7 @@ export async function getUserById(id: UserId): Promise<Result<User, string>> {
  * Creates a new user
  */
 export async function createUser(
-  userData: CreateUser
+  userData: CreateUser,
 ): Promise<Result<User, string>> {
   const errorTitle = 'Error creating user'
 
@@ -117,7 +117,7 @@ export async function createUser(
       : err(`${errorTitle}: ${user.error.message}`)
   } catch (error) {
     return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle
+      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
     )
   }
 }
@@ -127,7 +127,7 @@ export async function createUser(
  */
 export async function updateUser(
   id: UserId,
-  userData: UpdateUser
+  userData: UpdateUser,
 ): Promise<Result<User, string>> {
   const errorTitle = `Error updating user with ID ${id}`
 
@@ -162,7 +162,7 @@ export async function updateUser(
       : err(`${errorTitle}: ${user.error.message}`)
   } catch (error) {
     return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle
+      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
     )
   }
 }
@@ -187,7 +187,7 @@ export async function deleteUser(id: UserId): Promise<Result<null, string>> {
     return ok(null)
   } catch (error) {
     return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle
+      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
     )
   }
 }
