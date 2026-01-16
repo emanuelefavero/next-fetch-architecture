@@ -1,0 +1,48 @@
+### Mock API Endpoints
+
+@secret = {{$dotenv MOCK_API_SECRET}}
+
+### READ ###
+### List all users
+GET https://{{secret}}.mockapi.io/users
+Accept: application/json
+
+### List the first 3 users
+GET https://{{secret}}.mockapi.io/users?page=1&limit=3
+Accept: application/json
+
+### Sort users by name in ascending order
+GET https://{{secret}}.mockapi.io/users?sortBy=name&order=asc
+Accept: application/json
+
+
+### Get a single user by ID
+GET https://{{secret}}.mockapi.io/users/1
+Accept: application/json
+
+### CREATE ###
+### Create a new user
+POST https://{{secret}}.mockapi.io/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "age": 30
+}
+
+### UPDATE ###
+### Update an existing user
+PUT https://{{secret}}.mockapi.io/users/1
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "age": 28
+}
+
+### DELETE ###
+### Delete a user (pass last user ID)
+DELETE https://{{secret}}.mockapi.io/users/51
+Accept: application/json
