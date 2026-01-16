@@ -1,4 +1,4 @@
-# REST API
+# Next Fetch Architecture
 
 This project provides RESTful API examples using Next.js. It demonstrates how to create and manage API endpoints effectively.
 
@@ -33,13 +33,13 @@ This project uses [MockAPI](https://mockapi.io/) for simulating backend data. To
 - Clone the repository:
 
   ```bash
-    git clone https://github.com/emanuelefavero/rest-api.git
+    git clone https://github.com/emanuelefavero/next-fetch-architecture.git
   ```
 
 - Navigate to the project directory:
 
   ```bash
-    cd rest-api
+    cd next-fetch-architecture
   ```
 
 - Install dependencies:
