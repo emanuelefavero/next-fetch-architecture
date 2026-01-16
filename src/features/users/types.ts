@@ -16,23 +16,6 @@ import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
 export type User = z.infer<typeof UserSchema>
 
 /**
- * Options for fetching users, including pagination and sorting
- * @example
- * const options: GetUsersOptions = {
- *  page: 1,
- *  limit: 10,
- *  sortBy: 'name',
- *  order: 'asc'
- * }
- */
-export type GetUsersOptions = {
-  page?: number
-  limit?: number
-  sortBy?: keyof User
-  order?: 'asc' | 'desc'
-}
-
-/**
  * Represents the unique identifier for a user, derived from the UserSchema
  * Useful for referencing users by ID
  * @see {@link UserSchema} for the source schema

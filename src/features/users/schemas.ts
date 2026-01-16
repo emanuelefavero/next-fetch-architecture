@@ -19,7 +19,7 @@ export const UserSchema = z.object({
   // ISO 8601 formatted creation date
   createdAt: z.iso.datetime(),
 
-  // User's full name: trimmed, 1-100 chars, letters and spaces only
+  // Full name: trimmed, 1-100 chars, letters and spaces only
   name: z
     .string()
     .trim()
@@ -27,25 +27,16 @@ export const UserSchema = z.object({
     .max(100, 'Name must be at most 100 characters')
     .regex(/^[a-zA-Z\s]+$/, 'Name must contain only letters and spaces'),
 
-  // User's email address: ensures valid email format
+  // Email address: ensures valid email format
   email: z.email({ message: 'Invalid email address' }),
 
-  // User's age: integer between 0 and 150
+  // Age: integer between 0 and 150
   age: z
     .number()
     .int()
     .min(0, 'Age must be at least 0')
     .max(150, 'Age must be at most 150'),
 })
-
-export const GetUsersOptionsSchema = z
-  .object({
-    page: z.number().int().min(1).optional(),
-    limit: z.number().int().min(1).max(100).optional(),
-    sortBy: z.string().optional(),
-    order: z.enum(['asc', 'desc']).optional(),
-  })
-  .partial()
 
 /**
  * Zod schema for validating data required to create a new user

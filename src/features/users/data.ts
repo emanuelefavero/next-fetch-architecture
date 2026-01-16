@@ -1,9 +1,10 @@
 import { z } from 'zod'
 import { Result, ok, err } from '@/lib/result'
-import { User, UserId, CreateUser, UpdateUser, GetUsersOptions } from './types'
+import { User, UserId, CreateUser, UpdateUser } from './types'
 import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
 import { API_BASE_URL } from '@/config/env'
-import { buildQueryParams, validateQueryOptions } from './utils'
+import { buildQueryParams } from '@/lib/api/utils'
+import { QueryOptions } from '@/lib/api/types'
 
 const endpoint = `${API_BASE_URL}/users`
 
@@ -11,15 +12,9 @@ const endpoint = `${API_BASE_URL}/users`
  * Fetches all users
  */
 export async function getUsers(
-  options?: GetUsersOptions
+  options?: QueryOptions<User>
 ): Promise<Result<User[], string>> {
   const errorTitle = 'Error fetching users'
-
-  // Validate options
-  const validation = validateQueryOptions(options)
-  if (!validation.success) {
-    return err(`${errorTitle}: ${validation.error.message}`)
-  }
 
   try {
     // Build query params
