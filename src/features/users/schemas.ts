@@ -13,15 +13,24 @@ import { z } from 'zod'
  * })
  */
 export const UserSchema = z.object({
+  // Unique identifier for the user
   id: z.string(),
+
+  // ISO 8601 formatted creation date
   createdAt: z.iso.datetime(),
+
+  // User's full name: trimmed, 1-100 chars, letters and spaces only
   name: z
     .string()
     .trim()
     .min(1, 'Name is required')
     .max(100, 'Name must be at most 100 characters')
     .regex(/^[a-zA-Z\s]+$/, 'Name must contain only letters and spaces'),
+
+  // User's email address: ensures valid email format
   email: z.email({ message: 'Invalid email address' }),
+
+  // User's age: integer between 0 and 150
   age: z
     .number()
     .int()
