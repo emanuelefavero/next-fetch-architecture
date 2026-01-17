@@ -43,3 +43,7 @@ next-env.d.ts
 
 # .bak files
 *.bak
+
+# ai
+.ai/
+AGENTS.md
