@@ -1,5 +1,6 @@
 import { ENDPOINTS } from '@/lib/api/endpoints'
-import { Result, err, ok } from '@/lib/api/result'
+import { apiFetch } from '@/lib/api/fetch'
+import { Result, err } from '@/lib/api/result'
 import { QueryOptions } from '@/lib/api/types'
 import { buildQueryParams } from '@/lib/api/utils'
 import { z } from 'zod'
@@ -14,68 +15,27 @@ const endpoint = ENDPOINTS.users
 export async function getUsers(
   options?: QueryOptions<User>,
 ): Promise<Result<User[], string>> {
-  const errorTitle = 'Error fetching users'
+  const queryParams = buildQueryParams(options).toString()
+  const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
 
-  try {
-    // Build query params
-    const queryParams = buildQueryParams(options).toString()
-
-    // Construct URL
-    const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
-
-    // Fetch data
-    const res = await fetch(url, {
-      headers: { Accept: 'application/json' },
-    })
-
-    if (!res.ok) {
-      return err(`${errorTitle}: ${res.status} ${res.statusText}`)
-    }
-
-    const data = await res.json()
-
-    // Validate res data
-    const users = z.array(UserSchema).safeParse(data)
-
-    return users.success
-      ? ok(users.data)
-      : err(`${errorTitle}: ${users.error.message}`)
-  } catch (error) {
-    return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
-    )
-  }
+  return apiFetch({
+    url,
+    method: 'GET',
+    schema: z.array(UserSchema),
+    errorContext: 'Error fetching users',
+  })
 }
 
 /**
  * Fetches a single user by ID
  */
 export async function getUserById(id: UserId): Promise<Result<User, string>> {
-  const errorTitle = `Error fetching user with ID ${id}`
-
-  try {
-    // Fetch data
-    const res = await fetch(`${endpoint}/${id}`, {
-      headers: { Accept: 'application/json' },
-    })
-
-    if (!res.ok) {
-      return err(`${errorTitle}: ${res.status} ${res.statusText}`)
-    }
-
-    const data = await res.json()
-
-    // Validate res data
-    const user = UserSchema.safeParse(data)
-
-    return user.success
-      ? ok(user.data)
-      : err(`${errorTitle}: ${user.error.message}`)
-  } catch (error) {
-    return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
-    )
-  }
+  return apiFetch({
+    url: `${endpoint}/${id}`,
+    method: 'GET',
+    schema: UserSchema,
+    errorContext: `Error fetching user with ID ${id}`,
+  })
 }
 
 /**
@@ -84,42 +44,21 @@ export async function getUserById(id: UserId): Promise<Result<User, string>> {
 export async function createUser(
   userData: CreateUser,
 ): Promise<Result<User, string>> {
-  const errorTitle = 'Error creating user'
+  const errorContext = 'Error creating user'
 
   // Validate input data
   const parsedData = CreateUserSchema.safeParse(userData)
   if (!parsedData.success) {
-    return err(`${errorTitle}: ${parsedData.error.message}`)
+    return err(`${errorContext}: ${parsedData.error.message}`)
   }
 
-  try {
-    // Send POST request
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-
-    if (!res.ok) {
-      return err(`${errorTitle}: ${res.status} ${res.statusText}`)
-    }
-
-    const data = await res.json()
-
-    // Validate res data
-    const user = UserSchema.safeParse(data)
-
-    return user.success
-      ? ok(user.data)
-      : err(`${errorTitle}: ${user.error.message}`)
-  } catch (error) {
-    return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
-    )
-  }
+  return apiFetch({
+    url: endpoint,
+    method: 'POST',
+    body: userData,
+    schema: UserSchema,
+    errorContext,
+  })
 }
 
 /**
@@ -129,65 +68,31 @@ export async function updateUser(
   id: UserId,
   userData: UpdateUser,
 ): Promise<Result<User, string>> {
-  const errorTitle = `Error updating user with ID ${id}`
+  const errorContext = `Error updating user with ID ${id}`
 
   // Validate input data
   const parsedData = UpdateUserSchema.safeParse(userData)
   if (!parsedData.success) {
-    return err(`${errorTitle}: ${parsedData.error.message}`)
+    return err(`${errorContext}: ${parsedData.error.message}`)
   }
 
-  try {
-    // Send PUT request
-    const res = await fetch(`${endpoint}/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-
-    if (!res.ok) {
-      return err(`${errorTitle}: ${res.status} ${res.statusText}`)
-    }
-
-    const data = await res.json()
-
-    // Validate res data
-    const user = UserSchema.safeParse(data)
-
-    return user.success
-      ? ok(user.data)
-      : err(`${errorTitle}: ${user.error.message}`)
-  } catch (error) {
-    return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
-    )
-  }
+  return apiFetch({
+    url: `${endpoint}/${id}`,
+    method: 'PUT',
+    body: userData,
+    schema: UserSchema,
+    errorContext,
+  })
 }
 
 /**
  * Deletes a user by ID
  */
 export async function deleteUser(id: UserId): Promise<Result<null, string>> {
-  const errorTitle = `Error deleting user with ID ${id}`
-
-  try {
-    // Send DELETE request
-    const res = await fetch(`${endpoint}/${id}`, {
-      method: 'DELETE',
-      headers: { Accept: 'application/json' },
-    })
-
-    if (!res.ok) {
-      return err(`${errorTitle}: ${res.status} ${res.statusText}`)
-    }
-
-    return ok(null)
-  } catch (error) {
-    return err(
-      error instanceof Error ? `${errorTitle}: ${error.message}` : errorTitle,
-    )
-  }
+  return apiFetch({
+    url: `${endpoint}/${id}`,
+    method: 'DELETE',
+    schema: z.null(),
+    errorContext: `Error deleting user with ID ${id}`,
+  })
 }
