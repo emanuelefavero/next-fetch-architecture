@@ -5,48 +5,36 @@ import { Result, err, ok } from './result'
  * Wrapper around fetch that adds Zod schema validation to responses
  * Mirrors native fetch API signature with additional response configuration
  * @template T - The expected response data type
+ * @param schema - Zod schema for runtime validation of response
  * @param url - The URL to fetch (same as fetch API)
  * @param init - Request options (same as fetch API RequestInit)
- * @param response - Response handling configuration
- * @param response.schema - Zod schema for runtime validation of response
- * @param response.error - Error message context (e.g., "Error fetching user")
- * @returns Promise<Result<T, string>>
+ * @returns A Result containing either validated data of type T or an Error
  * @example
- * fetchWithSchema(
+ * fetchData(
+ *   UserSchema,
  *   '/api/users/1',
- *   { method: 'GET', headers: { Accept: 'application/json' } },
- *   {
- *     schema: UserSchema,
- *     error: 'Error fetching user'
- *   }
+ *   { method: 'GET', headers: { Accept: 'application/json' } }
  * )
  */
-export async function fetchWithSchema<T>(
+export async function fetchData<T>(
+  schema: z.ZodType<T>,
   url: string,
-  init: RequestInit,
-  response: {
-    schema: z.ZodType<T>
-    error: string
-  },
-): Promise<Result<T, string>> {
+  init?: RequestInit,
+): Promise<Result<T, Error>> {
   try {
     const res = await fetch(url, init)
 
     if (!res.ok) {
-      return err(`${response.error}: ${res.status} ${res.statusText}`)
+      return err(new Error(`HTTP ${res.status}: ${res.statusText}`))
     }
 
     const data = await res.json()
-    const validated = response.schema.safeParse(data)
+    const validated = schema.safeParse(data)
 
     return validated.success
       ? ok(validated.data)
-      : err(`${response.error}: ${validated.error.message}`)
+      : err(new Error(validated.error.message))
   } catch (error) {
-    return err(
-      error instanceof Error
-        ? `${response.error}: ${error.message}`
-        : response.error,
-    )
+    return err(error instanceof Error ? error : new Error('Unknown error'))
   }
 }

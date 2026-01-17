@@ -1,5 +1,5 @@
 import { ENDPOINTS } from '@/lib/api/endpoints'
-import { fetchWithSchema } from '@/lib/api/fetch'
+import { fetchData } from '@/lib/api/fetch'
 import { Result, err } from '@/lib/api/result'
 import { QueryOptions } from '@/lib/api/types'
 import { buildQueryParams } from '@/lib/api/utils'
@@ -14,32 +14,24 @@ const endpoint = ENDPOINTS.users
  */
 export async function getUsers(
   options?: QueryOptions<User>,
-): Promise<Result<User[], string>> {
+): Promise<Result<User[], Error>> {
   const queryParams = buildQueryParams(options).toString()
   const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
 
-  return fetchWithSchema(
-    url,
-    { method: 'GET', headers: { Accept: 'application/json' } },
-    {
-      schema: z.array(UserSchema),
-      error: 'Error fetching users',
-    },
-  )
+  return fetchData(z.array(UserSchema), url, {
+    method: 'GET',
+    headers: { Accept: 'application/json' },
+  })
 }
 
 /**
  * Fetches a single user by ID
  */
-export async function getUserById(id: UserId): Promise<Result<User, string>> {
-  return fetchWithSchema(
-    `${endpoint}/${id}`,
-    { method: 'GET', headers: { Accept: 'application/json' } },
-    {
-      schema: UserSchema,
-      error: `Error fetching user with ID ${id}`,
-    },
-  )
+export async function getUserById(id: UserId): Promise<Result<User, Error>> {
+  return fetchData(UserSchema, `${endpoint}/${id}`, {
+    method: 'GET',
+    headers: { Accept: 'application/json' },
+  })
 }
 
 /**
@@ -47,30 +39,21 @@ export async function getUserById(id: UserId): Promise<Result<User, string>> {
  */
 export async function createUser(
   userData: CreateUser,
-): Promise<Result<User, string>> {
-  const errorContext = 'Error creating user'
-
+): Promise<Result<User, Error>> {
   // Validate input data
   const parsedData = CreateUserSchema.safeParse(userData)
   if (!parsedData.success) {
-    return err(`${errorContext}: ${parsedData.error.message}`)
+    return err(new Error(`Error creating user: ${parsedData.error.message}`))
   }
 
-  return fetchWithSchema(
-    endpoint,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(userData),
+  return fetchData(UserSchema, endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
-    {
-      schema: UserSchema,
-      error: errorContext,
-    },
-  )
+    body: JSON.stringify(userData),
+  })
 }
 
 /**
@@ -79,42 +62,29 @@ export async function createUser(
 export async function updateUser(
   id: UserId,
   userData: UpdateUser,
-): Promise<Result<User, string>> {
-  const errorContext = `Error updating user with ID ${id}`
-
+): Promise<Result<User, Error>> {
   // Validate input data
   const parsedData = UpdateUserSchema.safeParse(userData)
   if (!parsedData.success) {
-    return err(`${errorContext}: ${parsedData.error.message}`)
+    return err(new Error(`Error updating user: ${parsedData.error.message}`))
   }
 
-  return fetchWithSchema(
-    `${endpoint}/${id}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(userData),
+  return fetchData(UserSchema, `${endpoint}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
-    {
-      schema: UserSchema,
-      error: errorContext,
-    },
-  )
+    body: JSON.stringify(userData),
+  })
 }
 
 /**
  * Deletes a user by ID
  */
-export async function deleteUser(id: UserId): Promise<Result<null, string>> {
-  return fetchWithSchema(
-    `${endpoint}/${id}`,
-    { method: 'DELETE', headers: { Accept: 'application/json' } },
-    {
-      schema: z.null(),
-      error: `Error deleting user with ID ${id}`,
-    },
-  )
+export async function deleteUser(id: UserId): Promise<Result<null, Error>> {
+  return fetchData(z.null(), `${endpoint}/${id}`, {
+    method: 'DELETE',
+    headers: { Accept: 'application/json' },
+  })
 }

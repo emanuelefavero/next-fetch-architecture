@@ -1,13 +1,13 @@
 /**
  * Result type representing either a success with data of type T
- * or an error with error information of type E (defaulting to string)
+ * or an error with error information of type E (defaulting to Error)
  * @template T - Type of the successful result data
- * @template E - Type of the error information (default: string)
+ * @template E - Type of the error information (default: Error)
  * @example
  * const successResult: Result<number> = { ok: true, data: 42 }
  * const errorResult: Result<never, Error> = { ok: false, error: new Error('Something went wrong') }
  */
-export type Result<T, E = string> =
+export type Result<T, E = Error> =
   | { ok: true; data: T }
   | { ok: false; error: E }
 
@@ -25,6 +25,6 @@ export function ok<T>(data: T): Result<T, never> {
  * @param error - The error information
  * @returns A Result object representing an error
  */
-export function err<E = string>(error: E): Result<never, E> {
+export function err<E = Error>(error: E): Result<never, E> {
   return { ok: false, error }
 }
