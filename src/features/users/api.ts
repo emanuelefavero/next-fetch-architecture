@@ -1,5 +1,5 @@
 import { ENDPOINTS } from '@/lib/api/endpoints'
-import { apiFetch } from '@/lib/api/fetch'
+import { fetchWithSchema } from '@/lib/api/fetch'
 import { Result, err } from '@/lib/api/result'
 import { QueryOptions } from '@/lib/api/types'
 import { buildQueryParams } from '@/lib/api/utils'
@@ -18,24 +18,24 @@ export async function getUsers(
   const queryParams = buildQueryParams(options).toString()
   const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
 
-  return apiFetch({
+  return fetchWithSchema(
     url,
-    method: 'GET',
-    schema: z.array(UserSchema),
-    errorContext: 'Error fetching users',
-  })
+    { method: 'GET', headers: { Accept: 'application/json' } },
+    z.array(UserSchema),
+    'Error fetching users',
+  )
 }
 
 /**
  * Fetches a single user by ID
  */
 export async function getUserById(id: UserId): Promise<Result<User, string>> {
-  return apiFetch({
-    url: `${endpoint}/${id}`,
-    method: 'GET',
-    schema: UserSchema,
-    errorContext: `Error fetching user with ID ${id}`,
-  })
+  return fetchWithSchema(
+    `${endpoint}/${id}`,
+    { method: 'GET', headers: { Accept: 'application/json' } },
+    UserSchema,
+    `Error fetching user with ID ${id}`,
+  )
 }
 
 /**
@@ -52,13 +52,19 @@ export async function createUser(
     return err(`${errorContext}: ${parsedData.error.message}`)
   }
 
-  return apiFetch({
-    url: endpoint,
-    method: 'POST',
-    body: userData,
-    schema: UserSchema,
+  return fetchWithSchema(
+    endpoint,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(userData),
+    },
+    UserSchema,
     errorContext,
-  })
+  )
 }
 
 /**
@@ -76,23 +82,29 @@ export async function updateUser(
     return err(`${errorContext}: ${parsedData.error.message}`)
   }
 
-  return apiFetch({
-    url: `${endpoint}/${id}`,
-    method: 'PUT',
-    body: userData,
-    schema: UserSchema,
+  return fetchWithSchema(
+    `${endpoint}/${id}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(userData),
+    },
+    UserSchema,
     errorContext,
-  })
+  )
 }
 
 /**
  * Deletes a user by ID
  */
 export async function deleteUser(id: UserId): Promise<Result<null, string>> {
-  return apiFetch({
-    url: `${endpoint}/${id}`,
-    method: 'DELETE',
-    schema: z.null(),
-    errorContext: `Error deleting user with ID ${id}`,
-  })
+  return fetchWithSchema(
+    `${endpoint}/${id}`,
+    { method: 'DELETE', headers: { Accept: 'application/json' } },
+    z.null(),
+    `Error deleting user with ID ${id}`,
+  )
 }
