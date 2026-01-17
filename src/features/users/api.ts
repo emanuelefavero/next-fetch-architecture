@@ -21,8 +21,10 @@ export async function getUsers(
   return fetchWithSchema(
     url,
     { method: 'GET', headers: { Accept: 'application/json' } },
-    z.array(UserSchema),
-    'Error fetching users',
+    {
+      schema: z.array(UserSchema),
+      error: 'Error fetching users',
+    },
   )
 }
 
@@ -33,8 +35,10 @@ export async function getUserById(id: UserId): Promise<Result<User, string>> {
   return fetchWithSchema(
     `${endpoint}/${id}`,
     { method: 'GET', headers: { Accept: 'application/json' } },
-    UserSchema,
-    `Error fetching user with ID ${id}`,
+    {
+      schema: UserSchema,
+      error: `Error fetching user with ID ${id}`,
+    },
   )
 }
 
@@ -62,8 +66,10 @@ export async function createUser(
       },
       body: JSON.stringify(userData),
     },
-    UserSchema,
-    errorContext,
+    {
+      schema: UserSchema,
+      error: errorContext,
+    },
   )
 }
 
@@ -92,8 +98,10 @@ export async function updateUser(
       },
       body: JSON.stringify(userData),
     },
-    UserSchema,
-    errorContext,
+    {
+      schema: UserSchema,
+      error: errorContext,
+    },
   )
 }
 
@@ -104,7 +112,9 @@ export async function deleteUser(id: UserId): Promise<Result<null, string>> {
   return fetchWithSchema(
     `${endpoint}/${id}`,
     { method: 'DELETE', headers: { Accept: 'application/json' } },
-    z.null(),
-    `Error deleting user with ID ${id}`,
+    {
+      schema: z.null(),
+      error: `Error deleting user with ID ${id}`,
+    },
   )
 }
