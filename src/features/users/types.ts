@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
+import {
+  CreateUserSchema,
+  UpdateUserSchema,
+  UserSchema,
+  UsersSchema,
+} from './schemas'
 
 /**
  * Represents a complete user entity with all required fields
@@ -14,6 +19,16 @@ import { UserSchema, CreateUserSchema, UpdateUserSchema } from './schemas'
  * }
  */
 export type User = z.infer<typeof UserSchema>
+
+/**
+ * Represents an array of users
+ * @see {@link UsersSchema} for validation details
+ * @example
+ * const users: Users = [
+ *  { id: '1', createdAt: '2026-01-01T00:00:00Z', name: 'John Doe', email: 'john.doe@example.com', age: 30 }
+ * ]
+ */
+export type Users = z.infer<typeof UsersSchema>
 
 /**
  * Represents the unique identifier for a user, derived from the UserSchema

@@ -3,9 +3,13 @@ import { fetchData } from '@/lib/api/fetch'
 import { Result, err } from '@/lib/api/result'
 import { QueryOptions } from '@/lib/api/types'
 import { buildQueryParams } from '@/lib/api/utils'
-import { z } from 'zod'
-import { CreateUserSchema, UpdateUserSchema, UserSchema } from './schemas'
-import { CreateUser, UpdateUser, User, UserId } from './types'
+import {
+  CreateUserSchema,
+  UpdateUserSchema,
+  UserSchema,
+  UsersSchema,
+} from './schemas'
+import { CreateUser, UpdateUser, User, UserId, Users } from './types'
 
 const endpoint = ENDPOINTS.users
 
@@ -14,11 +18,11 @@ const endpoint = ENDPOINTS.users
  */
 export async function getUsers(
   options?: QueryOptions<User>,
-): Promise<Result<User[], Error>> {
+): Promise<Result<Users, Error>> {
   const queryParams = buildQueryParams(options).toString()
   const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
 
-  return fetchData(z.array(UserSchema), url, {
+  return fetchData(UsersSchema, url, {
     method: 'GET',
     headers: { Accept: 'application/json' },
   })
@@ -82,8 +86,8 @@ export async function updateUser(
 /**
  * Deletes a user by ID
  */
-export async function deleteUser(id: UserId): Promise<Result<null, Error>> {
-  return fetchData(z.null(), `${endpoint}/${id}`, {
+export async function deleteUser(id: UserId): Promise<Result<User, Error>> {
+  return fetchData(UserSchema, `${endpoint}/${id}`, {
     method: 'DELETE',
     headers: { Accept: 'application/json' },
   })

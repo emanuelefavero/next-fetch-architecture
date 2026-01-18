@@ -39,6 +39,16 @@ export const UserSchema = z.object({
 })
 
 /**
+ * Zod schema for validating an array of users
+ * @see {@link Users} for the corresponding TypeScript type
+ * @example
+ * const users = UsersSchema.parse([
+ *  { id: '1', createdAt: '2026-01-01T00:00:00Z', name: 'John Doe', email: 'john.doe@example.com', age: 30 }
+ * ])
+ */
+export const UsersSchema = z.array(UserSchema)
+
+/**
  * Zod schema for validating data required to create a new user
  * @see {@link CreateUser} for the corresponding TypeScript type
  * @example
