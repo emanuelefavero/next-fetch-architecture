@@ -11,6 +11,10 @@ Accept: application/json
 GET https://{{secret}}.mockapi.io/users?page=1&limit=3
 Accept: application/json
 
+### Search users by name
+GET https://{{secret}}.mockapi.io/users?page=1&limit=3&search=Jane
+Accept: application/json
+
 ### Sort users by name in ascending order
 GET https://{{secret}}.mockapi.io/users?sortBy=name&order=asc
 Accept: application/json

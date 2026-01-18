@@ -15,4 +15,5 @@ export type QueryOptions<T> = {
   limit?: number
   sortBy?: keyof T
   order?: 'asc' | 'desc'
+  search?: string
 }
