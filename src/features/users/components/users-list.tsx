@@ -1,8 +1,11 @@
 'use client'
 
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 type UsersListProps = {
   users: Users
@@ -10,6 +13,8 @@ type UsersListProps = {
 }
 
 export function UsersList({ users, currentPage }: UsersListProps) {
+  const router = useRouter()
+
   // Build URL helper
   const buildUrl = (page: number): string => `?page=${page}`
 
@@ -17,31 +22,39 @@ export function UsersList({ users, currentPage }: UsersListProps) {
   const hasPrevPage = currentPage > 1
 
   return (
-    <div>
+    <div className='space-y-6 p-4'>
       <h1 className='text-2xl font-bold'>Users</h1>
 
-      <ul>
+      <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
         {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.email} - Age: {user.age}
-          </li>
+          <Card key={user.id} className='p-3'>
+            <div className='space-y-1'>
+              <h2 className='text-lg font-semibold'>{user.name}</h2>
+              <p className='text-sm text-muted-foreground'>{user.email}</p>
+              <Badge variant='secondary'>Age: {user.age}</Badge>
+            </div>
+          </Card>
         ))}
-      </ul>
+      </div>
 
       {/* Pagination */}
-      <nav>
-        {hasPrevPage ? (
-          <Link href={buildUrl(currentPage - 1)}>Previous</Link>
-        ) : (
-          <span>Previous</span>
-        )}
-        <span> Page {currentPage} </span>
-        {hasNextPage ? (
-          <Link href={buildUrl(currentPage + 1)}>Next</Link>
-        ) : (
-          <span>Next</span>
-        )}
-      </nav>
+      <div className='flex items-center justify-center space-x-4'>
+        <Button
+          onClick={() => router.push(buildUrl(currentPage - 1))}
+          disabled={!hasPrevPage}
+          variant='outline'
+        >
+          Previous
+        </Button>
+        <span className='text-sm font-medium'>Page {currentPage}</span>
+        <Button
+          onClick={() => router.push(buildUrl(currentPage + 1))}
+          disabled={!hasNextPage}
+          variant='outline'
+        >
+          Next
+        </Button>
+      </div>
     </div>
   )
 }
