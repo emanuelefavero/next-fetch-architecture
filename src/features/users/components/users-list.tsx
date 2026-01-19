@@ -18,7 +18,8 @@ export function UsersList({ users, currentPage }: UsersListProps) {
 
   return (
     <div>
-      <h1>Users</h1>
+      <h1 className='text-2xl font-bold'>Users</h1>
+
       <ul>
         {users.map((user) => (
           <li key={user.id}>

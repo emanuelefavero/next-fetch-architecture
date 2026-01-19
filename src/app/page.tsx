@@ -7,8 +7,10 @@ type PageProps = {
 
 export default function Home({ searchParams }: PageProps) {
   return (
-    <Suspense fallback={<div>Loading users...</div>}>
-      <UsersLoader searchParams={searchParams} />
-    </Suspense>
+    <>
+      <Suspense fallback={<div>Loading users...</div>}>
+        <UsersLoader searchParams={searchParams} />
+      </Suspense>
+    </>
   )
 }

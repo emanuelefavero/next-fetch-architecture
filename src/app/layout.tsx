@@ -1,4 +1,5 @@
 import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
 import { metadata as appMetadata } from '@/config/metadata'
 import { ThemeProvider } from '@/features/theme/components/theme-provider'
 import type { Metadata } from 'next'
@@ -36,7 +37,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <Main>{children}</Main>
         </ThemeProvider>
       </body>
     </html>

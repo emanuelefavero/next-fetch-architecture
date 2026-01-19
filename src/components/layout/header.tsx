@@ -1,9 +1,18 @@
 import { TITLE } from '@/config/metadata'
 import { ModeToggle } from '@/features/theme/components/mode-toggle'
+import { cn } from '@/lib/utils'
 
-export function Header() {
+type HeaderProps = React.ComponentProps<'header'>
+
+export function Header({ className, ...props }: HeaderProps) {
   return (
-    <header className='py-py flex items-center justify-between gap-2 border-b border-border px-px'>
+    <header
+      className={cn(
+        'flex items-center justify-between gap-2 px-4 py-3',
+        className,
+      )}
+      {...props}
+    >
       <div className='font-bold'>{TITLE}</div>
       <div className='flex items-center gap-4'>
         <ModeToggle />
