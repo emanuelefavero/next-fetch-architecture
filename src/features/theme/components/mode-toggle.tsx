@@ -7,17 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import type { ThemeOption } from '@/features/theme/types'
+import { themes } from '@/features/theme/data'
 import { cn } from '@/lib/utils'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-
-// * Menu Theme options
-export const themes = [
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
-  { value: 'system', label: 'System' },
-] as const satisfies ThemeOption[]
 
 // * ModeToggle component
 export function ModeToggle() {
