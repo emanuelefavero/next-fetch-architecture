@@ -1,4 +1,5 @@
 import type { QueryOptions } from '@/lib/api/types'
+import type { SearchParams } from '@/types/routing'
 import { UsersSearchParamsSchema } from './schemas'
 import type { User } from './types'
 
@@ -10,8 +11,8 @@ import type { User } from './types'
  * const options = parseUsersSearchParams({ page: '2', search: 'john' })
  * // Returns: { page: 2, search: 'john' }
  */
-export function parseUsersSearchParams(searchParams: {
-  [key: string]: string | string[] | undefined
-}): QueryOptions<User> {
+export function parseUsersSearchParams(
+  searchParams: SearchParams,
+): QueryOptions<User> {
   return UsersSearchParamsSchema.parse(searchParams)
 }

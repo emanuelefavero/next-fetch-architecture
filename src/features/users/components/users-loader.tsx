@@ -1,10 +1,11 @@
 import { getUsers } from '@/features/users/api'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import { parseUsersSearchParams } from '@/features/users/utils'
+import type { SearchParams } from '@/types/routing'
 import { UsersList } from './users-list'
 
 type UsersLoaderProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<SearchParams>
 }
 
 export async function UsersLoader({ searchParams }: UsersLoaderProps) {
