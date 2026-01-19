@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 
 type UsersListProps = {
   users: Users
@@ -14,6 +15,7 @@ type UsersListProps = {
 
 export function UsersList({ users, currentPage }: UsersListProps) {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   // Build URL helper
   const buildUrl = (page: number): string => `?page=${page}`
@@ -40,19 +42,30 @@ export function UsersList({ users, currentPage }: UsersListProps) {
       {/* Pagination */}
       <div className='flex items-center justify-center space-x-4'>
         <Button
-          onClick={() => router.push(buildUrl(currentPage - 1))}
-          disabled={!hasPrevPage}
+          onClick={() =>
+            startTransition(() => router.push(buildUrl(currentPage - 1)))
+          }
+          disabled={isPending || !hasPrevPage}
           variant='outline'
+          className='min-w-28'
         >
-          Previous
+          {isPending ? 'Loading...' : 'Previous'}
         </Button>
-        <span className='text-sm font-medium'>Page {currentPage}</span>
+        <span className='text-sm font-medium'>
+          Page{' '}
+          <span className='inline-block min-w-[2ch] text-center'>
+            {currentPage}
+          </span>
+        </span>
         <Button
-          onClick={() => router.push(buildUrl(currentPage + 1))}
-          disabled={!hasNextPage}
+          onClick={() =>
+            startTransition(() => router.push(buildUrl(currentPage + 1)))
+          }
+          disabled={isPending || !hasNextPage}
           variant='outline'
+          className='min-w-28'
         >
-          Next
+          {isPending ? 'Loading...' : 'Next'}
         </Button>
       </div>
     </div>
