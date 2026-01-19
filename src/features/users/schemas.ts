@@ -19,13 +19,16 @@ export const UserSchema = z.object({
   // ISO 8601 formatted creation date
   createdAt: z.iso.datetime(),
 
-  // Full name: trimmed, 1-100 chars, letters and spaces only
+  // Full name: trimmed, 1-100 chars, letters, spaces, numbers, hyphens, apostrophes, and periods
   name: z
     .string()
     .trim()
     .min(1, 'Name is required')
     .max(100, 'Name must be at most 100 characters')
-    .regex(/^[a-zA-Z\s]+$/, 'Name must contain only letters and spaces'),
+    .regex(
+      /^[a-zA-Z0-9\s\-'.]+$/,
+      'Name must contain only letters, numbers, spaces, hyphens, apostrophes, and periods',
+    ),
 
   // Email address: ensures valid email format
   email: z.email({ message: 'Invalid email address' }),
