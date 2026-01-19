@@ -1,7 +1,14 @@
-export default function Home() {
+import { UsersLoader } from '@/features/users/components/users-loader'
+import { Suspense } from 'react'
+
+type PageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default function Home({ searchParams }: PageProps) {
   return (
-    <>
-      <h1>REST API</h1>
-    </>
+    <Suspense fallback={<div>Loading users...</div>}>
+      <UsersLoader searchParams={searchParams} />
+    </Suspense>
   )
 }
