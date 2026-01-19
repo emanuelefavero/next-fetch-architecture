@@ -1,17 +1,6 @@
 import type { QueryOptions } from '@/lib/api/types'
-import { z } from 'zod'
+import { UsersSearchParamsSchema } from './schemas'
 import type { User } from './types'
-
-/**
- * Zod schema for validating URL search params for users
- * Ensures type-safe parsing of query parameters
- */
-const UsersSearchParamsSchema = z.object({
-  page: z.coerce.number().min(1).default(1),
-  sortBy: z.enum(['name', 'email', 'age']).optional(),
-  order: z.enum(['asc', 'desc']).optional(),
-  search: z.string().optional(),
-})
 
 /**
  * Parses and validates search params for users queries

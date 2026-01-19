@@ -76,3 +76,18 @@ export const CreateUserSchema = UserSchema.omit({
  * })
  */
 export const UpdateUserSchema = CreateUserSchema.partial()
+
+/**
+ * Zod schema for validating URL search params for users queries
+ * Ensures type-safe parsing of query parameters
+ * @see {@link UsersSearchParams} for the corresponding TypeScript type
+ * @example
+ * const params = UsersSearchParamsSchema.parse({ page: '2', sortBy: 'name' })
+ * // Returns: { page: 2, sortBy: 'name' }
+ */
+export const UsersSearchParamsSchema = z.object({
+  page: z.coerce.number().min(1).default(1),
+  sortBy: z.enum(['name', 'email', 'age']).optional(),
+  order: z.enum(['asc', 'desc']).optional(),
+  search: z.string().optional(),
+})
