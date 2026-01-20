@@ -29,10 +29,10 @@ export function UsersList({ users, currentPage }: UsersListProps) {
 
       <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
         {users.map((user) => (
-          <Card key={user.id} className='p-3'>
+          <Card key={user.id} className='min-w-0 p-3'>
             <div className='space-y-1'>
               <h2 className='text-lg font-semibold'>{user.name}</h2>
-              <p className='text-sm text-muted-foreground'>{user.email}</p>
+              <p className='truncate text-sm text-muted-foreground' title={user.email} aria-label={user.email}>{user.email}</p>
               <Badge variant='secondary'>Age: {user.age}</Badge>
             </div>
           </Card>
