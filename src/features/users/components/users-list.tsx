@@ -40,14 +40,14 @@ export function UsersList({ users, currentPage }: UsersListProps) {
       </div>
 
       {/* Pagination */}
-      <div className='flex items-center justify-center space-x-4'>
+      <div className='flex flex-col items-center justify-center gap-4 2xs:flex-row'>
         <Button
           onClick={() =>
             startTransition(() => router.push(buildUrl(currentPage - 1)))
           }
           disabled={isPending || !hasPrevPage}
           variant='outline'
-          className='min-w-28'
+          className='w-full 2xs:w-28'
         >
           {isPending ? 'Loading...' : 'Previous'}
         </Button>
@@ -63,7 +63,7 @@ export function UsersList({ users, currentPage }: UsersListProps) {
           }
           disabled={isPending || !hasNextPage}
           variant='outline'
-          className='min-w-28'
+          className='w-full 2xs:w-28'
         >
           {isPending ? 'Loading...' : 'Next'}
         </Button>
