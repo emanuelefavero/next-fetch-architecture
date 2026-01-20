@@ -8,6 +8,15 @@ type UsersLoaderProps = {
   searchParams: Promise<SearchParams>
 }
 
+/**
+ * Server Component: Users data loader and composition root
+ *
+ * Responsibilities:
+ * 1. Awaiting and parsing search parameters
+ * 2. Fetching user data on the server
+ * 3. Handling the Result pattern (success/failure)
+ * 4. Rendering the UI orchestrator or error state
+ */
 export async function UsersLoader({ searchParams }: UsersLoaderProps) {
   // Await and parse searchParams inside the Suspense boundary
   const resolvedSearchParams = await searchParams

@@ -11,12 +11,22 @@ type PaginationProps = {
   currentPage: number
 }
 
+/**
+ * Client Component: Handles pagination controls and navigation logic
+ *
+ * Responsibilities:
+ * - Computes next/previous page availability based on data length
+ * - Builds navigation URLs
+ * - Triggers client-side navigation with optimistic updates (useTransition)
+ */
 export function Pagination({ users, currentPage }: PaginationProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  // Helpers
+  // Helper to build URL with updated page query parameter
   const buildUrl = (page: number): string => `?page=${page}`
+
+  // Determine if next/previous pages are available
   const hasNextPage = users.length === USERS_PER_PAGE
   const hasPrevPage = currentPage > 1
 

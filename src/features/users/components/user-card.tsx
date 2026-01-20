@@ -6,6 +6,10 @@ type UserCardProps = {
   user: User
 }
 
+/**
+ * Pure presentation component for a single user entity
+ * Displays summary information (name, email, age) in a card format
+ */
 export function UserCard({ user }: UserCardProps) {
   return (
     <Card key={user.id} className='min-w-0 p-3'>

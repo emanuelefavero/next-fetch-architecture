@@ -9,6 +9,16 @@ type UsersListProps = {
   currentPage: number
 }
 
+/**
+ * UI Orchestrator Component for the Users feature
+ *
+ * Responsibilities:
+ * - Composes the layout for the users list
+ * - Renders individual UserCards
+ * - Places the Pagination component
+ *
+ * This component is purely presentational and agnostic of data fetching.
+ */
 export function UsersList({ users, currentPage }: UsersListProps) {
   return (
     <div className='space-y-6 p-4'>
