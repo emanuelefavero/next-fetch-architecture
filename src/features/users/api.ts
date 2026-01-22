@@ -3,6 +3,8 @@ import { fetchData } from '@/lib/api/fetch'
 import { Result, err } from '@/lib/api/result'
 import { QueryOptions } from '@/lib/api/types'
 import { buildQueryParams } from '@/lib/api/utils'
+import { cacheLife, cacheTag } from 'next/cache'
+import { USERS_CACHE_LIFE, USERS_CACHE_TAG } from './cache'
 import {
   CreateUserSchema,
   UpdateUserSchema,
@@ -19,6 +21,10 @@ const endpoint = ENDPOINTS.users
 export async function getUsers(
   options?: QueryOptions<User>,
 ): Promise<Result<Users, Error>> {
+  'use cache'
+  cacheTag(USERS_CACHE_TAG)
+  cacheLife(USERS_CACHE_LIFE)
+
   const queryParams = buildQueryParams(options).toString()
   const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
 

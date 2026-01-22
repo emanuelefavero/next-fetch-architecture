@@ -28,3 +28,19 @@ export function ok<T>(data: T): Result<T, never> {
 export function err<E = Error>(error: E): Result<never, E> {
   return { ok: false, error }
 }
+
+/**
+ * Unwraps a Result, returning the data on success or throwing the error on failure.
+ * Useful for converting Result to exceptions in framework boundaries (e.g., Next.js cache/actions).
+ * @param result - The Result to unwrap
+ * @returns The successful data
+ * @throws The error if the Result is an error
+ * @example
+ * const data = unwrapResult(getUsers())  // Throws if error, returns data if success
+ */
+export function unwrapResult<T, E = Error>(result: Result<T, E>): T {
+  if (result.ok) {
+    return result.data
+  }
+  throw result.error // Throw the error for exception-based handling (e.g., in cache/actions)
+}

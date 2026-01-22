@@ -22,7 +22,7 @@ export async function UsersLoader({ searchParams }: UsersLoaderProps) {
   const resolvedSearchParams = await searchParams
   const queryOptions = parseUsersSearchParams(resolvedSearchParams)
 
-  // Fetch data server-side with validated options and fixed limit
+  // Fetch data server-side with validated options and fixed limit (cached)
   const result = await getUsers({ ...queryOptions, limit: USERS_PER_PAGE })
 
   // Handle Result: Pass data or error to child
