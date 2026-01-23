@@ -6,7 +6,7 @@ import {
   deleteUser as apiDeleteUser,
   updateUser as apiUpdateUser,
 } from './api'
-import { revalidateUsersCache } from './cache'
+import { revalidate } from './cache'
 import type { CreateUser, UpdateUser, User, UserId } from './types'
 
 /**
@@ -15,7 +15,7 @@ import type { CreateUser, UpdateUser, User, UserId } from './types'
  */
 export async function createUserAction(userData: CreateUser): Promise<User> {
   const user = unwrapResult(await apiCreateUser(userData))
-  revalidateUsersCache() // Trigger stale-while-revalidate
+  revalidate.users()
   return user
 }
 
@@ -28,7 +28,8 @@ export async function updateUserAction(
   userData: UpdateUser,
 ): Promise<User> {
   const user = unwrapResult(await apiUpdateUser(id, userData))
-  revalidateUsersCache() // Trigger stale-while-revalidate
+  revalidate.users()
+  revalidate.user(id)
   return user
 }
 
@@ -38,6 +39,7 @@ export async function updateUserAction(
  */
 export async function deleteUserAction(id: UserId): Promise<User> {
   const user = unwrapResult(await apiDeleteUser(id))
-  revalidateUsersCache() // Trigger stale-while-revalidate
+  revalidate.users()
+  revalidate.user(id)
   return user
 }

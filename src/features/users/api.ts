@@ -4,7 +4,7 @@ import { Result, err } from '@/lib/api/result'
 import { QueryOptions } from '@/lib/api/types'
 import { buildQueryParams } from '@/lib/api/utils'
 import { cacheLife, cacheTag } from 'next/cache'
-import { USERS_CACHE_LIFE, USERS_CACHE_TAG } from './cache'
+import { cache } from './cache'
 import {
   CreateUserSchema,
   UpdateUserSchema,
@@ -15,6 +15,8 @@ import { CreateUser, UpdateUser, User, UserId, Users } from './types'
 
 const endpoint = ENDPOINTS.users
 
+// ==================== QUERIES ====================
+
 /**
  * Fetches all users
  */
@@ -22,8 +24,8 @@ export async function getUsers(
   options?: QueryOptions<User>,
 ): Promise<Result<Users, Error>> {
   'use cache'
-  cacheTag(USERS_CACHE_TAG)
-  cacheLife(USERS_CACHE_LIFE)
+  cacheTag(cache.users.tag)
+  cacheLife(cache.users.life)
 
   const queryParams = buildQueryParams(options).toString()
   const url = queryParams ? `${endpoint}?${queryParams}` : endpoint
@@ -38,11 +40,17 @@ export async function getUsers(
  * Fetches a single user by ID
  */
 export async function getUserById(id: UserId): Promise<Result<User, Error>> {
+  'use cache'
+  cacheTag(cache.user.tag(id))
+  cacheLife(cache.user.life)
+
   return fetchData(UserSchema, `${endpoint}/${id}`, {
     method: 'GET',
     headers: { Accept: 'application/json' },
   })
 }
+
+// =================== MUTATIONS ===================
 
 /**
  * Creates a new user
