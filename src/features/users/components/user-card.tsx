@@ -16,7 +16,7 @@ export function UserCard({ user, delay = 0 }: UserCardProps) {
   return (
     <Card
       key={user.id}
-      className={cn('min-w-0 p-3', `animate-fade-in-up`)}
+      className={cn('min-w-0 p-3', `motion-safe:animate-fade-in-up`)}
       style={{ animationDelay: `${delay * 50}ms` }}
     >
       <div className='space-y-1'>
