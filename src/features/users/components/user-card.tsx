@@ -1,23 +1,35 @@
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import type { User } from '@/features/users/types'
+import {
+  animation,
+  getStaggerDelay,
+  type StaggerSpeed,
+} from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
 
 type UserCardProps = {
   user: User
-  delay?: number
+  index?: number
+  staggerSpeed?: StaggerSpeed
 }
 
 /**
- * Pure presentation component for a single user entity
+ * Presentation component for a single user entity
  * Displays summary information (name, email, age) in a card format
  */
-export function UserCard({ user, delay = 0 }: UserCardProps) {
+export function UserCard({
+  user,
+  index = 0,
+  staggerSpeed = 'medium',
+}: UserCardProps) {
   return (
     <Card
       key={user.id}
-      className={cn('min-w-0 p-3', `motion-safe:animate-fade-in-up`)}
-      style={{ animationDelay: `${delay * 50}ms` }}
+      className={cn('min-w-0 p-3', animation.className)}
+      style={{
+        animationDelay: getStaggerDelay(index, staggerSpeed),
+      }}
     >
       <div className='space-y-1'>
         <h2 className='text-lg font-semibold'>{user.name}</h2>
