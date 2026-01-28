@@ -24,7 +24,7 @@ export function UsersList({ users, currentPage }: UsersListProps) {
     <div className='space-y-6 p-4'>
       <h1 className='text-2xl font-bold'>Users</h1>
 
-      <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6'>
         {users.map((user, i) => (
           <UserCard key={user.id} user={user} index={i} />
         ))}

@@ -32,7 +32,13 @@ export function UserCard({
       }}
     >
       <div className='space-y-1'>
-        <h2 className='text-lg font-semibold'>{user.name}</h2>
+        <h2
+          className='truncate text-lg font-semibold'
+          title={user.name}
+          aria-label={user.name}
+        >
+          {user.name}
+        </h2>
         <p
           className='truncate text-sm text-muted-foreground'
           title={user.email}
