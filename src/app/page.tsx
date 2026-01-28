@@ -1,6 +1,6 @@
 import { UsersLoader } from '@/features/users/components/users-loader'
-import { Suspense } from 'react'
 import type { SearchParams } from '@/types/routing'
+import { Suspense } from 'react'
 
 type PageProps = {
   searchParams: Promise<SearchParams>
