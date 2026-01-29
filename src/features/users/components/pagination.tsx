@@ -3,12 +3,12 @@
 import { Button } from '@/components/ui/button'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 
 type PaginationProps = {
   users: Users
   currentPage: number
+  isPending: boolean
+  onNavigate: (page: number) => void
 }
 
 /**
@@ -16,16 +16,15 @@ type PaginationProps = {
  *
  * Responsibilities:
  * - Computes next/previous page availability based on data length
- * - Builds navigation URLs
- * - Triggers client-side navigation with optimistic updates (useTransition)
+ * - Renders pagination buttons with loading states
+ * - Delegates navigation to parent component
  */
-export function Pagination({ users, currentPage }: PaginationProps) {
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-
-  // Helper to build URL with updated page query parameter
-  const buildUrl = (page: number): string => `?page=${page}`
-
+export function Pagination({
+  users,
+  currentPage,
+  isPending,
+  onNavigate,
+}: PaginationProps) {
   // Determine if next/previous pages are available
   const hasNextPage = users.length === USERS_PER_PAGE
   const hasPrevPage = currentPage > 1
@@ -33,9 +32,7 @@ export function Pagination({ users, currentPage }: PaginationProps) {
   return (
     <div className='flex flex-col items-center justify-center gap-4 2xs:flex-row'>
       <Button
-        onClick={() =>
-          startTransition(() => router.push(buildUrl(currentPage - 1)))
-        }
+        onClick={() => onNavigate(currentPage - 1)}
         disabled={isPending || !hasPrevPage}
         variant='outline'
         className='w-full 2xs:w-28'
@@ -49,9 +46,7 @@ export function Pagination({ users, currentPage }: PaginationProps) {
         </span>
       </span>
       <Button
-        onClick={() =>
-          startTransition(() => router.push(buildUrl(currentPage + 1)))
-        }
+        onClick={() => onNavigate(currentPage + 1)}
         disabled={isPending || !hasNextPage}
         variant='outline'
         className='w-full 2xs:w-28'

@@ -17,6 +17,7 @@ type UserCardLayoutProps = {
 /**
  * Shared layout wrapper for UserCard variants
  * Provides consistent structure, styling, and animation behavior
+ * Uses flex to center content vertically within stretched grid cells
  */
 export function UserCardLayout({
   children,
@@ -26,12 +27,16 @@ export function UserCardLayout({
 }: UserCardLayoutProps) {
   return (
     <Card
-      className={cn('min-w-0 p-3', animation.className, className)}
+      className={cn(
+        'flex min-w-0 flex-col items-start justify-center gap-1 p-3',
+        animation.className,
+        className,
+      )}
       style={{
         animationDelay: getStaggerDelay(index, staggerSpeed),
       }}
     >
-      <div className='space-y-1'>{children}</div>
+      {children}
     </Card>
   )
 }

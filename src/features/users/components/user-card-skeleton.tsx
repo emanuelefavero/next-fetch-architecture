@@ -1,36 +1,63 @@
+import { Badge } from '@/components/ui/badge'
 import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
+import { cn } from '@/lib/utils'
 import { UserCardLayout } from './user-card-layout'
 
 type UserCardSkeletonProps = {
   index?: number
   staggerSpeed?: StaggerSpeed
+  animate?: boolean
 }
 
 /**
  * Skeleton placeholder for UserCard
- * Used during loading states and to fill grid gaps on pagination
+ * Uses invisible text to match exact DOM structure and dimensions of real UserCard
+ * Ensures pixel-perfect height matching across all states and breakpoints
  */
 export function UserCardSkeleton({
   index,
   staggerSpeed,
+  animate = false,
 }: UserCardSkeletonProps) {
   return (
     <UserCardLayout
       index={index}
       staggerSpeed={staggerSpeed}
-      className='aria-hidden border-dashed bg-background'
+      className={cn(!animate && 'border-dashed bg-background')}
     >
-      {/* Name skeleton */}
-      <div className='h-7 w-32 rounded bg-muted' aria-hidden='true' />
-
-      {/* Email skeleton */}
-      <div className='h-5 w-48 rounded bg-muted/60' aria-hidden='true' />
-
-      {/* Age badge skeleton */}
-      <div
-        className='inline-flex h-5 w-16 rounded-full bg-muted/40'
+      {/* Name skeleton - exact h2 structure with invisible text */}
+      <h2
+        className={cn(
+          'truncate rounded bg-muted text-lg font-semibold text-transparent select-none',
+          animate && 'animate-pulse',
+        )}
         aria-hidden='true'
-      />
+      >
+        <span className='pointer-events-none'>Jane Doe</span>
+      </h2>
+
+      {/* Email skeleton - exact p structure with invisible text */}
+      <p
+        className={cn(
+          'truncate rounded bg-muted/60 text-sm text-transparent select-none',
+          animate && 'animate-pulse',
+        )}
+        aria-hidden='true'
+      >
+        <span className='pointer-events-none'>jane.doe@example.com</span>
+      </p>
+
+      {/* Age badge skeleton - uses Badge component with invisible text */}
+      <Badge
+        variant='secondary'
+        className={cn(
+          'bg-muted/40 text-transparent select-none',
+          animate && 'animate-pulse',
+        )}
+        aria-hidden='true'
+      >
+        <span className='pointer-events-none'>Age: 28</span>
+      </Badge>
     </UserCardLayout>
   )
 }
