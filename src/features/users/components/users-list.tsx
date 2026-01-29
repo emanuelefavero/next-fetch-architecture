@@ -1,6 +1,7 @@
 'use client'
 
 import type { Users } from '@/features/users/types'
+import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { USERS_PER_PAGE } from '../config'
@@ -18,10 +19,10 @@ type UsersListProps = {
  *
  * Responsibilities:
  * - Composes the layout for the users list
- * - Manages pagination navigation and loading states
+ * - Manages pagination navigation with optimistic UI (keeps content visible during transitions)
  * - Renders individual UserCards
  * - Fills remaining grid slots with skeletons for visual consistency
- * - Places the Pagination component
+ * - Places the Pagination component with loading state feedback
  */
 export function UsersList({ users, currentPage }: UsersListProps) {
   const router = useRouter()
@@ -41,29 +42,26 @@ export function UsersList({ users, currentPage }: UsersListProps) {
     <div className='space-y-6 p-4'>
       <h1 className='text-2xl font-bold'>Users</h1>
 
-      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6'>
-        {isPending ? (
-          // Show full skeleton during loading
-          Array.from({ length: USERS_PER_PAGE }).map((_, i) => (
-            <UserCardSkeleton key={i} index={i} animate={true} />
-          ))
-        ) : (
-          <>
-            {/* Render actual user data */}
-            {users.map((user, i) => (
-              <UserCard key={user.id} user={user} index={i} />
-            ))}
-
-            {/* Fill remaining slots with skeletons */}
-            {Array.from({ length: skeletonsNeeded }).map((_, i) => (
-              <UserCardSkeleton
-                key={`skeleton-${i}`}
-                index={users.length + i}
-                animate={false}
-              />
-            ))}
-          </>
+      <div
+        className={cn(
+          'grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6',
+          isPending &&
+            'pointer-events-none opacity-50 blur-xs transition-all duration-700',
         )}
+      >
+        {/* Always render actual user data during pagination */}
+        {users.map((user, i) => (
+          <UserCard key={user.id} user={user} index={i} />
+        ))}
+
+        {/* Fill remaining slots with static skeletons */}
+        {Array.from({ length: skeletonsNeeded }).map((_, i) => (
+          <UserCardSkeleton
+            key={`skeleton-${i}`}
+            index={users.length + i}
+            animate={false}
+          />
+        ))}
       </div>
 
       <Pagination
