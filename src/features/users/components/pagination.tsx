@@ -35,7 +35,7 @@ export function Pagination({
         onClick={() => onNavigate(currentPage - 1)}
         disabled={isPending || !hasPrevPage}
         variant='outline'
-        className='w-full 2xs:w-28'
+        className='w-full select-none 2xs:w-28'
       >
         {isPending ? 'Loading...' : 'Previous'}
       </Button>
@@ -49,7 +49,7 @@ export function Pagination({
         onClick={() => onNavigate(currentPage + 1)}
         disabled={isPending || !hasNextPage}
         variant='outline'
-        className='w-full 2xs:w-28'
+        className='w-full select-none 2xs:w-28'
       >
         {isPending ? 'Loading...' : 'Next'}
       </Button>
