@@ -18,23 +18,17 @@ export function UserCardSkeleton({
     <UserCardLayout
       index={index}
       staggerSpeed={staggerSpeed}
-      className='aria-hidden'
+      className='aria-hidden border-dashed bg-background'
     >
       {/* Name skeleton */}
-      <div
-        className='h-7 w-32 animate-pulse rounded bg-muted'
-        aria-hidden='true'
-      />
+      <div className='h-7 w-32 rounded bg-muted' aria-hidden='true' />
 
       {/* Email skeleton */}
-      <div
-        className='h-5 w-48 animate-pulse rounded bg-muted/60'
-        aria-hidden='true'
-      />
+      <div className='h-5 w-48 rounded bg-muted/60' aria-hidden='true' />
 
       {/* Age badge skeleton */}
       <div
-        className='inline-flex h-5 w-16 animate-pulse rounded-full bg-muted/40'
+        className='inline-flex h-5 w-16 rounded-full bg-muted/40'
         aria-hidden='true'
       />
     </UserCardLayout>
