@@ -1,5 +1,10 @@
 import type { User } from '@/features/users/types'
-import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
+import {
+  UserCardBadge,
+  UserCardEmail,
+  UserCardName,
+  UserCardRoot,
+} from './shared'
 
 type UserCardProps = {
   user: User

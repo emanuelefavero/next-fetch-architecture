@@ -1,6 +1,11 @@
 import type { User } from '@/features/users/types'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
+import {
+  UserCardBadge,
+  UserCardEmail,
+  UserCardName,
+  UserCardRoot,
+} from './shared'
 
 type UserCardSkeletonProps = {
   variant?: VariantProps<typeof rootVariants>['variant']
