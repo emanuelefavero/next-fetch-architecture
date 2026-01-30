@@ -1,13 +1,8 @@
-import { User } from '@/features/users/types'
+import type { User } from '@/features/users/types'
 import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
-import {
-  UserCardBadge,
-  UserCardEmail,
-  UserCardName,
-} from './user-card-elements'
-import { UserCardLayout } from './user-card-layout'
+import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
 
 type UserCardSkeletonProps = {
   index?: number
@@ -19,7 +14,7 @@ type UserCardSkeletonProps = {
  * Skeleton style variants using CVA
  * Centralizes skeleton-specific styling with type-safe variant system
  */
-const variants = cva(
+const skeletonVariants = cva(
   'pointer-events-none text-transparent select-none', // Base
   {
     variants: {
@@ -38,7 +33,7 @@ const variants = cva(
 /**
  * Static skeleton data to match real UserCard content
  */
-const data: Pick<User, 'name' | 'email' | 'age'> = {
+const skeletonData: Pick<User, 'name' | 'email' | 'age'> = {
   name: 'Jane Doe',
   email: 'jane.doe@example.com',
   age: 28,
@@ -55,25 +50,28 @@ export function UserCardSkeleton({
   animate = false,
 }: UserCardSkeletonProps) {
   return (
-    <UserCardLayout
+    <UserCardRoot
       index={index}
       staggerSpeed={staggerSpeed}
       className={cn(!animate && 'border-dashed bg-background')}
     >
-      <UserCardName className={variants({ bg: 'base', animate })} aria-hidden>
-        {data.name}
+      <UserCardName
+        className={skeletonVariants({ bg: 'base', animate })}
+        aria-hidden
+      >
+        {skeletonData.name}
       </UserCardName>
 
       <UserCardEmail
-        className={variants({ bg: 'medium', animate })}
+        className={skeletonVariants({ bg: 'medium', animate })}
         aria-hidden
       >
-        {data.email}
+        {skeletonData.email}
       </UserCardEmail>
 
-      <UserCardBadge className={variants({ bg: 'light', animate })}>
-        Age: {data.age}
+      <UserCardBadge className={skeletonVariants({ bg: 'light', animate })}>
+        Age: {skeletonData.age}
       </UserCardBadge>
-    </UserCardLayout>
+    </UserCardRoot>
   )
 }

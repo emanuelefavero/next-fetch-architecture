@@ -6,8 +6,7 @@ import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { Pagination } from './pagination'
-import { UserCard } from './user-card'
-import { UserCardSkeleton } from './user-card-skeleton'
+import { UserCard, UserCardSkeleton } from './user-card'
 
 type UsersListProps = {
   users: Users

@@ -1,11 +1,6 @@
 import type { User } from '@/features/users/types'
 import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
-import {
-  UserCardBadge,
-  UserCardEmail,
-  UserCardName,
-} from './user-card-elements'
-import { UserCardLayout } from './user-card-layout'
+import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
 
 type UserCardProps = {
   user: User
@@ -19,7 +14,7 @@ type UserCardProps = {
  */
 export function UserCard({ user, index, staggerSpeed }: UserCardProps) {
   return (
-    <UserCardLayout index={index} staggerSpeed={staggerSpeed}>
+    <UserCardRoot index={index} staggerSpeed={staggerSpeed}>
       <UserCardName title={user.name} aria-label={user.name}>
         {user.name}
       </UserCardName>
@@ -27,6 +22,6 @@ export function UserCard({ user, index, staggerSpeed }: UserCardProps) {
         {user.email}
       </UserCardEmail>
       <UserCardBadge>Age: {user.age}</UserCardBadge>
-    </UserCardLayout>
+    </UserCardRoot>
   )
 }

@@ -6,9 +6,10 @@ import {
   type StaggerSpeed,
 } from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
+import type { ReactNode } from 'react'
 
-type UserCardLayoutProps = {
-  children: React.ReactNode
+type UserCardRootProps = {
+  children: ReactNode
   index?: number
   staggerSpeed?: StaggerSpeed
   className?: string
@@ -19,12 +20,12 @@ type UserCardLayoutProps = {
  * Provides consistent structure, styling, and animation behavior
  * Uses flex to center content vertically within stretched grid cells
  */
-export function UserCardLayout({
+export function UserCardRoot({
   children,
   index = 0,
   staggerSpeed = DEFAULT_STAGGER_SPEED,
   className,
-}: UserCardLayoutProps) {
+}: UserCardRootProps) {
   return (
     <Card
       className={cn(
