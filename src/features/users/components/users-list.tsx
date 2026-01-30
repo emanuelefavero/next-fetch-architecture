@@ -1,10 +1,10 @@
 'use client'
 
+import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { USERS_PER_PAGE } from '../config'
 import { Pagination } from './pagination'
 import { UserCard } from './user-card'
 import { UserCardSkeleton } from './user-card-skeleton'

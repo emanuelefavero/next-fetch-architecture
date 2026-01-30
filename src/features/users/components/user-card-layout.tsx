@@ -1,11 +1,11 @@
 import { Card } from '@/components/ui/card'
+import { DEFAULT_STAGGER_SPEED } from '@/features/users/config'
 import {
   animation,
   getStaggerDelay,
   type StaggerSpeed,
 } from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
-import { DEFAULT_STAGGER_SPEED } from '../config'
 
 type UserCardLayoutProps = {
   children: React.ReactNode
