@@ -18,7 +18,7 @@ type UserCardSkeletonProps = {
  * Skeleton style variants using CVA
  * Centralizes skeleton-specific styling with type-safe variant system
  */
-const skeletonVariants = cva(
+const variants = cva(
   'pointer-events-none text-transparent select-none', // Base
   {
     variants: {
@@ -37,7 +37,7 @@ const skeletonVariants = cva(
 /**
  * Static skeleton data to match real UserCard content
  */
-const skeletonData = {
+const data = {
   name: 'Jane Doe',
   email: 'jane.doe@example.com',
   age: 28,
@@ -59,22 +59,19 @@ export function UserCardSkeleton({
       staggerSpeed={staggerSpeed}
       className={cn(!animate && 'border-dashed bg-background')}
     >
-      <UserCardName
-        className={skeletonVariants({ bg: 'base', animate })}
-        aria-hidden
-      >
-        {skeletonData.name}
+      <UserCardName className={variants({ bg: 'base', animate })} aria-hidden>
+        {data.name}
       </UserCardName>
 
       <UserCardEmail
-        className={skeletonVariants({ bg: 'medium', animate })}
+        className={variants({ bg: 'medium', animate })}
         aria-hidden
       >
-        {skeletonData.email}
+        {data.email}
       </UserCardEmail>
 
-      <UserCardBadge className={skeletonVariants({ bg: 'light', animate })}>
-        Age: {skeletonData.age}
+      <UserCardBadge className={variants({ bg: 'light', animate })}>
+        Age: {data.age}
       </UserCardBadge>
     </UserCardLayout>
   )
