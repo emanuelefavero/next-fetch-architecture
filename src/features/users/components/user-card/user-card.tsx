@@ -1,20 +1,18 @@
 import type { User } from '@/features/users/types'
-import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
 import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
 
 type UserCardProps = {
   user: User
   index?: number
-  staggerSpeed?: StaggerSpeed
 }
 
 /**
  * Presentation component for a single user entity
  * Displays summary information (name, email, age) in a card format
  */
-export function UserCard({ user, index, staggerSpeed }: UserCardProps) {
+export function UserCard({ user, index }: UserCardProps) {
   return (
-    <UserCardRoot index={index} staggerSpeed={staggerSpeed}>
+    <UserCardRoot index={index}>
       <UserCardName title={user.name} aria-label={user.name}>
         {user.name}
       </UserCardName>

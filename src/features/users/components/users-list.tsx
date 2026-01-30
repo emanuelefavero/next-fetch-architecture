@@ -57,6 +57,7 @@ export function UsersList({ users, currentPage }: UsersListProps) {
         {Array.from({ length: skeletonsNeeded }).map((_, i) => (
           <UserCardSkeleton
             key={`skeleton-${i}`}
+            variant='secondary'
             index={users.length + i}
             animate={false}
           />

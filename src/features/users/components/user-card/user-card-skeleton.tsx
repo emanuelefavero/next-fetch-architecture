@@ -1,20 +1,34 @@
 import type { User } from '@/features/users/types'
-import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
-import { cn } from '@/lib/utils'
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
 
 type UserCardSkeletonProps = {
-  index?: number
-  staggerSpeed?: StaggerSpeed
+  variant?: VariantProps<typeof rootVariants>['variant']
   animate?: boolean
+  index?: number
 }
 
 /**
- * Skeleton style variants using CVA
+ * Root card variants for skeleton states
+ * Controls the overall card appearance (border, background)
+ */
+const rootVariants = cva('', {
+  variants: {
+    variant: {
+      default: '',
+      secondary: 'border-dashed bg-background',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+/**
+ * Primitive element variants for skeleton content
  * Centralizes skeleton-specific styling with type-safe variant system
  */
-const skeletonVariants = cva(
+const primitiveVariants = cva(
   'pointer-events-none text-transparent select-none', // Base
   {
     variants: {
@@ -33,7 +47,7 @@ const skeletonVariants = cva(
 /**
  * Static skeleton data to match real UserCard content
  */
-const skeletonData: Pick<User, 'name' | 'email' | 'age'> = {
+const data: Pick<User, 'name' | 'email' | 'age'> = {
   name: 'Jane Doe',
   email: 'jane.doe@example.com',
   age: 28,
@@ -45,32 +59,28 @@ const skeletonData: Pick<User, 'name' | 'email' | 'age'> = {
  * Ensures pixel-perfect height matching across all states and breakpoints
  */
 export function UserCardSkeleton({
-  index,
-  staggerSpeed,
+  variant = 'default',
   animate = false,
+  index,
 }: UserCardSkeletonProps) {
   return (
-    <UserCardRoot
-      index={index}
-      staggerSpeed={staggerSpeed}
-      className={cn(!animate && 'border-dashed bg-background')}
-    >
+    <UserCardRoot index={index} className={rootVariants({ variant })}>
       <UserCardName
-        className={skeletonVariants({ bg: 'base', animate })}
+        className={primitiveVariants({ bg: 'base', animate })}
         aria-hidden
       >
-        {skeletonData.name}
+        {data.name}
       </UserCardName>
 
       <UserCardEmail
-        className={skeletonVariants({ bg: 'medium', animate })}
+        className={primitiveVariants({ bg: 'medium', animate })}
         aria-hidden
       >
-        {skeletonData.email}
+        {data.email}
       </UserCardEmail>
 
-      <UserCardBadge className={skeletonVariants({ bg: 'light', animate })}>
-        Age: {skeletonData.age}
+      <UserCardBadge className={primitiveVariants({ bg: 'light', animate })}>
+        Age: {data.age}
       </UserCardBadge>
     </UserCardRoot>
   )

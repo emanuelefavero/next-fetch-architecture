@@ -1,17 +1,10 @@
 import { Card } from '@/components/ui/card'
-import { DEFAULT_STAGGER_SPEED } from '@/features/users/config'
-import {
-  animation,
-  getStaggerDelay,
-  type StaggerSpeed,
-} from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
 import type { ReactNode } from 'react'
 
 type UserCardRootProps = {
   children: ReactNode
   index?: number
-  staggerSpeed?: StaggerSpeed
   className?: string
 }
 
@@ -23,18 +16,17 @@ type UserCardRootProps = {
 export function UserCardRoot({
   children,
   index = 0,
-  staggerSpeed = DEFAULT_STAGGER_SPEED,
   className,
 }: UserCardRootProps) {
   return (
     <Card
       className={cn(
         'flex min-w-0 flex-col items-start justify-center gap-1 p-3',
-        animation.className,
+        'motion-safe:animate-fade-in-up', // animation
         className,
       )}
       style={{
-        animationDelay: getStaggerDelay(index, staggerSpeed),
+        animationDelay: `${index * 50}ms`, // staggered delay
       }}
     >
       {children}
