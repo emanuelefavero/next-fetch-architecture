@@ -1,6 +1,11 @@
-import { Badge } from '@/components/ui/badge'
 import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
+import { cva } from 'class-variance-authority'
+import {
+  UserCardBadge,
+  UserCardEmail,
+  UserCardName,
+} from './user-card-elements'
 import { UserCardLayout } from './user-card-layout'
 
 type UserCardSkeletonProps = {
@@ -8,6 +13,35 @@ type UserCardSkeletonProps = {
   staggerSpeed?: StaggerSpeed
   animate?: boolean
 }
+
+/**
+ * Skeleton style variants using CVA
+ * Centralizes skeleton-specific styling with type-safe variant system
+ */
+const skeletonVariants = cva(
+  'pointer-events-none text-transparent select-none', // Base
+  {
+    variants: {
+      bg: {
+        base: 'bg-muted',
+        medium: 'bg-muted/60',
+        light: 'bg-muted/40',
+      },
+      animate: {
+        true: 'animate-pulse',
+      },
+    },
+  },
+)
+
+/**
+ * Static skeleton data to match real UserCard content
+ */
+const skeletonData = {
+  name: 'Jane Doe',
+  email: 'jane.doe@example.com',
+  age: 28,
+} as const
 
 /**
  * Skeleton placeholder for UserCard
@@ -25,39 +59,23 @@ export function UserCardSkeleton({
       staggerSpeed={staggerSpeed}
       className={cn(!animate && 'border-dashed bg-background')}
     >
-      {/* Name skeleton - exact h2 structure with invisible text */}
-      <h2
-        className={cn(
-          'truncate rounded bg-muted text-lg font-semibold text-transparent select-none',
-          animate && 'animate-pulse',
-        )}
-        aria-hidden='true'
+      <UserCardName
+        className={skeletonVariants({ bg: 'base', animate })}
+        aria-hidden
       >
-        <span className='pointer-events-none'>Jane Doe</span>
-      </h2>
+        {skeletonData.name}
+      </UserCardName>
 
-      {/* Email skeleton - exact p structure with invisible text */}
-      <p
-        className={cn(
-          'truncate rounded bg-muted/60 text-sm text-transparent select-none',
-          animate && 'animate-pulse',
-        )}
-        aria-hidden='true'
+      <UserCardEmail
+        className={skeletonVariants({ bg: 'medium', animate })}
+        aria-hidden
       >
-        <span className='pointer-events-none'>jane.doe@example.com</span>
-      </p>
+        {skeletonData.email}
+      </UserCardEmail>
 
-      {/* Age badge skeleton - uses Badge component with invisible text */}
-      <Badge
-        variant='secondary'
-        className={cn(
-          'bg-muted/40 text-transparent select-none',
-          animate && 'animate-pulse',
-        )}
-        aria-hidden='true'
-      >
-        <span className='pointer-events-none'>Age: 28</span>
-      </Badge>
+      <UserCardBadge className={skeletonVariants({ bg: 'light', animate })}>
+        Age: {skeletonData.age}
+      </UserCardBadge>
     </UserCardLayout>
   )
 }
