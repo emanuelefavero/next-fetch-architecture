@@ -1,3 +1,4 @@
+import { User } from '@/features/users/types'
 import type { StaggerSpeed } from '@/lib/animations/fade-in-up'
 import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
@@ -37,7 +38,7 @@ const variants = cva(
 /**
  * Static skeleton data to match real UserCard content
  */
-const data = {
+const data: Pick<User, 'name' | 'email' | 'age'> = {
   name: 'Jane Doe',
   email: 'jane.doe@example.com',
   age: 28,
