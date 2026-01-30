@@ -144,12 +144,6 @@
   }
 }
 
-/* Utilities */
-@utility animation-delay-* {
-  animation-delay: --value(integer) ms;
-}
-
-/* Base styles */
 @layer base {
   * {
     box-sizing: border-box;
@@ -163,15 +157,7 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-system-sans);
-  }
-}
-
-/* Utilities */
-@layer utilities {
-  mark {
-    background-color: var(--mark);
-    color: inherit;
-    border-radius: 0.25rem;
-    padding-inline: 0.25rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
