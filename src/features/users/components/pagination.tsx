@@ -5,10 +5,10 @@ import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 
 type PaginationProps = {
-  users: Users
-  currentPage: number
-  isPending: boolean
-  onNavigate: (page: number) => void
+  users?: Users
+  currentPage?: number
+  isPending?: boolean
+  onNavigate?: (page: number) => void
 }
 
 /**
@@ -18,12 +18,14 @@ type PaginationProps = {
  * - Computes next/previous page availability based on data length
  * - Renders pagination buttons with loading states
  * - Delegates navigation to parent component
+ *
+ * Defaults allow rendering as skeleton without separate component
  */
 export function Pagination({
-  users,
-  currentPage,
-  isPending,
-  onNavigate,
+  users = [],
+  currentPage = 1,
+  isPending = false,
+  onNavigate = () => {},
 }: PaginationProps) {
   // Determine if next/previous pages are available
   const hasNextPage = users.length === USERS_PER_PAGE
