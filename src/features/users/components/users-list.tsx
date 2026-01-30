@@ -1,5 +1,6 @@
 'use client'
 
+import { StaggeredFadeIn } from '@/components/animations/staggered-fade-in'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 import { cn } from '@/lib/utils'
@@ -50,17 +51,16 @@ export function UsersList({ users, currentPage }: UsersListProps) {
       >
         {/* Always render actual user data during pagination */}
         {users.map((user, i) => (
-          <UserCard key={user.id} user={user} index={i} />
+          <StaggeredFadeIn key={user.id} index={i}>
+            <UserCard user={user} />
+          </StaggeredFadeIn>
         ))}
 
         {/* Fill remaining slots with static skeletons */}
         {Array.from({ length: skeletonsNeeded }).map((_, i) => (
-          <UserCardSkeleton
-            key={`skeleton-${i}`}
-            variant='secondary'
-            index={users.length + i}
-            animate={false}
-          />
+          <StaggeredFadeIn key={`skeleton-${i}`} index={users.length + i}>
+            <UserCardSkeleton variant='secondary' animate={false} />
+          </StaggeredFadeIn>
         ))}
       </div>
 

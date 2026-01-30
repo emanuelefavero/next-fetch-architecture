@@ -3,16 +3,15 @@ import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
 
 type UserCardProps = {
   user: User
-  index?: number
 }
 
 /**
  * Presentation component for a single user entity
  * Displays summary information (name, email, age) in a card format
  */
-export function UserCard({ user, index }: UserCardProps) {
+export function UserCard({ user }: UserCardProps) {
   return (
-    <UserCardRoot index={index}>
+    <UserCardRoot>
       <UserCardName title={user.name} aria-label={user.name}>
         {user.name}
       </UserCardName>

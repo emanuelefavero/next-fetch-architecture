@@ -5,7 +5,6 @@ import { UserCardBadge, UserCardEmail, UserCardName, UserCardRoot } from './ui'
 type UserCardSkeletonProps = {
   variant?: VariantProps<typeof rootVariants>['variant']
   animate?: boolean
-  index?: number
 }
 
 /**
@@ -61,10 +60,9 @@ const data: Pick<User, 'name' | 'email' | 'age'> = {
 export function UserCardSkeleton({
   variant = 'default',
   animate = false,
-  index,
 }: UserCardSkeletonProps) {
   return (
-    <UserCardRoot index={index} className={rootVariants({ variant })}>
+    <UserCardRoot className={rootVariants({ variant })}>
       <UserCardName
         className={primitiveVariants({ bg: 'base', animate })}
         aria-hidden
