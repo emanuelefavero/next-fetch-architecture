@@ -1,2 +1,2 @@
-export { UserCard } from './user-card'
-export { UserCardSkeleton } from './user-card-skeleton'
+export { UserCard } from './card'
+export { UserCardSkeleton } from './skeleton'

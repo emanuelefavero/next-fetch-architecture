@@ -2,7 +2,7 @@ import { getUsers } from '@/features/users/api'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import { parseUsersSearchParams } from '@/features/users/utils'
 import type { SearchParams } from '@/types/routing'
-import { UsersList } from './users-list'
+import { UsersList } from './list'
 
 type UsersLoaderProps = {
   searchParams: Promise<SearchParams>

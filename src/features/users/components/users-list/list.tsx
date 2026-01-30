@@ -5,9 +5,9 @@ import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { Pagination } from './pagination'
-import { UserCard, UserCardSkeleton } from './user-card'
-import { UsersListLayout } from './users-list-layout'
+import { Pagination } from '../pagination'
+import { UserCard, UserCardSkeleton } from '../user-card'
+import { UsersListLayout } from './layout'
 
 type UsersListProps = {
   users: Users

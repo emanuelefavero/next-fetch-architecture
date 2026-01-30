@@ -1,7 +1,7 @@
 import { USERS_PER_PAGE } from '@/features/users/config'
-import { Pagination } from './pagination'
-import { UserCardSkeleton } from './user-card'
-import { UsersListLayout } from './users-list-layout'
+import { Pagination } from '../pagination'
+import { UserCardSkeleton } from '../user-card'
+import { UsersListLayout } from './layout'
 
 /**
  * Skeleton for UsersList during Suspense fallback
