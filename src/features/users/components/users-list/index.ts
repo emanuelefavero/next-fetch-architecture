@@ -1,4 +1,5 @@
 export { UsersListLayout } from './layout'
 export { UsersList } from './list'
 export { UsersLoader } from './loader'
+export { Pagination } from './pagination'
 export { UsersListSkeleton } from './skeleton'

@@ -1,6 +1,6 @@
-export { Pagination } from './pagination'
 export { UserCard, UserCardSkeleton } from './user-card'
 export {
+  Pagination,
   UsersList,
   UsersListLayout,
   UsersListSkeleton,
