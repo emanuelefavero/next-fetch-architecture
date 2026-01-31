@@ -44,3 +44,28 @@ export function unwrapResult<T, E = Error>(result: Result<T, E>): T {
   }
   throw result.error // Throw the error for exception-based handling (e.g., in cache/actions)
 }
+
+/**
+ * Pattern match on Result type for exhaustive handling
+ * Pure function that branches on success/error without throwing
+ * @param result - The Result to match on
+ * @param handlers - Object with ok and err handler functions
+ * @returns The return value from the matched handler
+ * @example
+ * match(result, {
+ *   ok: (users) => <UsersList users={users} />,
+ *   err: (error) => <Alert variant='destructive'>
+ *    <AlertTitle>Error</AlertTitle>
+ *    <AlertDescription>{error.message}</AlertDescription>
+ *   </Alert>
+ * })
+ */
+export function match<T, E, R>(
+  result: Result<T, E>,
+  handlers: {
+    ok: (data: T) => R
+    err: (error: E) => R
+  },
+): R {
+  return result.ok ? handlers.ok(result.data) : handlers.err(result.error)
+}

@@ -1,7 +1,10 @@
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getUsers } from '@/features/users/api'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import { parseUsersSearchParams } from '@/features/users/utils'
+import { match } from '@/lib/api/result'
 import type { SearchParams } from '@/types/routing'
+import { AlertCircleIcon } from 'lucide-react'
 import { UsersList } from './list'
 
 type UsersLoaderProps = {
@@ -25,10 +28,17 @@ export async function UsersLoader({ searchParams }: UsersLoaderProps) {
   // Fetch data server-side with validated options and fixed limit (cached)
   const result = await getUsers({ ...queryOptions, limit: USERS_PER_PAGE })
 
-  // Handle Result: Pass data or error to child
-  if (!result.ok) {
-    return <div>Error loading users: {result.error.message}</div>
-  }
-
-  return <UsersList users={result.data} currentPage={queryOptions.page ?? 1} />
+  // Handle Result: Pattern match for exhaustive handling
+  return match(result, {
+    ok: (users) => (
+      <UsersList users={users} currentPage={queryOptions.page ?? 1} />
+    ),
+    err: (error) => (
+      <Alert variant='destructive'>
+        <AlertCircleIcon />
+        <AlertTitle>Failed to load users</AlertTitle>
+        <AlertDescription>{error.message}</AlertDescription>
+      </Alert>
+    ),
+  })
 }
