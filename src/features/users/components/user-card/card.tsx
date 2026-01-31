@@ -1,10 +1,6 @@
 import type { User } from '@/features/users/types'
-import {
-  UserCardBadge,
-  UserCardEmail,
-  UserCardName,
-  UserCardRoot,
-} from './shared'
+import { UserCardLayout } from './layout'
+import { UserCardBadge, UserCardEmail, UserCardName } from './primitives'
 
 type UserCardProps = {
   user: User
@@ -16,7 +12,7 @@ type UserCardProps = {
  */
 export function UserCard({ user }: UserCardProps) {
   return (
-    <UserCardRoot>
+    <UserCardLayout>
       <UserCardName title={user.name} aria-label={user.name}>
         {user.name}
       </UserCardName>
@@ -24,6 +20,6 @@ export function UserCard({ user }: UserCardProps) {
         {user.email}
       </UserCardEmail>
       <UserCardBadge>Age: {user.age}</UserCardBadge>
-    </UserCardRoot>
+    </UserCardLayout>
   )
 }

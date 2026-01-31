@@ -1,11 +1,7 @@
 import type { User } from '@/features/users/types'
 import { cva, type VariantProps } from 'class-variance-authority'
-import {
-  UserCardBadge,
-  UserCardEmail,
-  UserCardName,
-  UserCardRoot,
-} from './shared'
+import { UserCardLayout } from './layout'
+import { UserCardBadge, UserCardEmail, UserCardName } from './primitives'
 
 type UserCardSkeletonProps = {
   variant?: VariantProps<typeof rootVariants>['variant']
@@ -67,7 +63,7 @@ export function UserCardSkeleton({
   animate = false,
 }: UserCardSkeletonProps) {
   return (
-    <UserCardRoot className={rootVariants({ variant })}>
+    <UserCardLayout className={rootVariants({ variant })}>
       <UserCardName
         className={primitiveVariants({ bg: 'base', animate })}
         aria-hidden
@@ -85,6 +81,6 @@ export function UserCardSkeleton({
       <UserCardBadge className={primitiveVariants({ bg: 'light', animate })}>
         Age: {data.age}
       </UserCardBadge>
-    </UserCardRoot>
+    </UserCardLayout>
   )
 }
