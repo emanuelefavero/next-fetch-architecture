@@ -1,11 +1,12 @@
 'use client'
 
 import { StaggeredFadeIn } from '@/components/animations/staggered-fade-in'
+import { UserCard } from '@/features/users/components/user-card/card'
+import { UserCardSkeleton } from '@/features/users/components/user-card/skeleton'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { UserCard, UserCardSkeleton } from '../user-card'
 import { UsersListLayout } from './layout'
 import { Pagination } from './pagination'
 

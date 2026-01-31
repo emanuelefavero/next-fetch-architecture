@@ -1,5 +1,5 @@
+import { UserCardSkeleton } from '@/features/users/components/user-card/skeleton'
 import { USERS_PER_PAGE } from '@/features/users/config'
-import { UserCardSkeleton } from '../user-card'
 import { UsersListLayout } from './layout'
 import { Pagination } from './pagination'
 

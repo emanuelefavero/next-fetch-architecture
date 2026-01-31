@@ -1,5 +1,6 @@
 import { TypographyH1 } from '@/components/typography/h1'
-import { UsersListSkeleton, UsersLoader } from '@/features/users/components'
+import { UsersLoader } from '@/features/users/components/users-list/loader'
+import { UsersListSkeleton } from '@/features/users/components/users-list/skeleton'
 import type { SearchParams } from '@/types/routing'
 import { Suspense } from 'react'
 
