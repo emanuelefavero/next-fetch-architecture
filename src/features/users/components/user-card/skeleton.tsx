@@ -48,9 +48,9 @@ const primitiveVariants = cva(
  * Static skeleton data to match real UserCard content
  */
 const data: Pick<User, 'name' | 'email' | 'age'> = {
-  name: 'Jane Doe',
-  email: 'jane.doe@example.com',
-  age: 28,
+  name: 'Loading...',
+  email: 'loading@example.com',
+  age: 30,
 } as const
 
 /**
