@@ -5,6 +5,7 @@ import { UserCard } from '@/features/users/components/user-card/card'
 import { UserCardSkeleton } from '@/features/users/components/user-card/skeleton'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
+import { buildQueryParams } from '@/lib/api/utils'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { UsersListLayout } from './layout'
@@ -30,7 +31,8 @@ export function UsersList({ users, currentPage }: UsersListProps) {
 
   const navigateToPage = (page: number) => {
     startTransition(() => {
-      router.push(`?page=${page}`)
+      const queryParams = buildQueryParams({ page })
+      router.push(`?${queryParams.toString()}`)
     })
   }
 
