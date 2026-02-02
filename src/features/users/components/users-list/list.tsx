@@ -7,7 +7,7 @@ import { USERS_PER_PAGE } from '@/features/users/config'
 import type { Users } from '@/features/users/types'
 import { buildQueryParams } from '@/lib/api/utils'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useEffect, useTransition } from 'react'
 import { UsersListLayout } from './layout'
 import { Pagination } from './pagination'
 
@@ -35,6 +35,13 @@ export function UsersList({ users, currentPage }: UsersListProps) {
       router.push(`?${queryParams.toString()}`)
     })
   }
+
+  // Prefetch next page on mount and when currentPage changes
+  useEffect(() => {
+    const nextPage = currentPage + 1
+    const queryParams = buildQueryParams({ page: nextPage })
+    router.prefetch(`?${queryParams.toString()}`)
+  }, [currentPage, router])
 
   const skeletonsNeeded = Math.max(0, USERS_PER_PAGE - users.length)
 
