@@ -5,7 +5,7 @@ import { UserCard } from '@/features/users/components/user-card/card'
 import { UserCardSkeleton } from '@/features/users/components/user-card/skeleton'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import { usePaginationNavigation } from '@/features/users/hooks/usePaginationNavigation'
-import { usePrefetchNextPage } from '@/features/users/hooks/usePrefetchNextPage'
+import { usePaginationPrefetch } from '@/features/users/hooks/usePaginationPrefetch'
 import type { Users } from '@/features/users/types'
 import { UsersListLayout } from './layout'
 import { Pagination } from './pagination'
@@ -26,7 +26,7 @@ type UsersListProps = {
  */
 export function UsersList({ users, currentPage }: UsersListProps) {
   const { navigateToPage, isPending } = usePaginationNavigation()
-  usePrefetchNextPage(currentPage)
+  usePaginationPrefetch(currentPage)
 
   const skeletonsNeeded = Math.max(0, USERS_PER_PAGE - users.length)
 
