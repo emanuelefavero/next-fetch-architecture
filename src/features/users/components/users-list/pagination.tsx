@@ -28,6 +28,7 @@ export function Pagination({
   onNavigate = () => {},
 }: PaginationProps) {
   // Determine if next/previous pages are available
+  // NOTE: The Mock API provides no total pages, so we assume more pages exist if we received exactly USERS_PER_PAGE items (since this constant is also used to set the limit of received items). If less, we're probably on the last page
   const hasNextPage = users.length === USERS_PER_PAGE
   const hasPrevPage = currentPage > 1
 
