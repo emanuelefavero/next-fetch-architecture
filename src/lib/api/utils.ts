@@ -10,7 +10,7 @@ import { QueryOptions } from './types'
  * // Returns: URLSearchParams with "page=1&limit=10&sortBy=name"
  */
 export function buildQueryParams<T>(
-  options?: QueryOptions<T>
+  options?: QueryOptions<T>,
 ): URLSearchParams {
   const params = new URLSearchParams()
 
@@ -26,4 +26,15 @@ export function buildQueryParams<T>(
   })
 
   return params
+}
+
+/**
+ * Builds a pagination URL with query parameters
+ * @param page - The page number to navigate to
+ * @returns URL string with query parameters
+ * @example
+ * buildPaginationUrl(2) // Returns: "?page=2"
+ */
+export function buildPaginationUrl(page: number): string {
+  return `?${buildQueryParams({ page }).toString()}`
 }

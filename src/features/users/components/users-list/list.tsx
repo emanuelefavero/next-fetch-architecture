@@ -4,10 +4,9 @@ import { StaggeredFadeIn } from '@/components/animations/staggered-fade-in'
 import { UserCard } from '@/features/users/components/user-card/card'
 import { UserCardSkeleton } from '@/features/users/components/user-card/skeleton'
 import { USERS_PER_PAGE } from '@/features/users/config'
+import { usePaginationNavigation } from '@/features/users/hooks/usePaginationNavigation'
+import { usePrefetchNextPage } from '@/features/users/hooks/usePrefetchNextPage'
 import type { Users } from '@/features/users/types'
-import { buildQueryParams } from '@/lib/api/utils'
-import { useRouter } from 'next/navigation'
-import { useEffect, useTransition } from 'react'
 import { UsersListLayout } from './layout'
 import { Pagination } from './pagination'
 
@@ -26,22 +25,8 @@ type UsersListProps = {
  * - Composes layout via UsersListLayout
  */
 export function UsersList({ users, currentPage }: UsersListProps) {
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-
-  const navigateToPage = (page: number) => {
-    startTransition(() => {
-      const queryParams = buildQueryParams({ page })
-      router.push(`?${queryParams.toString()}`)
-    })
-  }
-
-  // Prefetch next page on mount and when currentPage changes
-  useEffect(() => {
-    const nextPage = currentPage + 1
-    const queryParams = buildQueryParams({ page: nextPage })
-    router.prefetch(`?${queryParams.toString()}`)
-  }, [currentPage, router])
+  const { navigateToPage, isPending } = usePaginationNavigation()
+  usePrefetchNextPage(currentPage)
 
   const skeletonsNeeded = Math.max(0, USERS_PER_PAGE - users.length)
 
