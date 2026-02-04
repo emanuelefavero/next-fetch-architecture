@@ -16,7 +16,7 @@ export function UserCardName({
 }: UserCardNameProps) {
   return (
     <h2
-      className={cn('truncate rounded text-lg font-semibold', className)}
+      className={cn('w-full truncate rounded text-lg font-semibold', className)}
       {...props}
     >
       {children}
@@ -36,7 +36,7 @@ export function UserCardEmail({
   return (
     <p
       className={cn(
-        'truncate rounded text-sm text-muted-foreground',
+        'w-full truncate rounded text-sm text-muted-foreground',
         className,
       )}
       {...props}

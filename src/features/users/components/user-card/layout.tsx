@@ -16,7 +16,7 @@ export function UserCardLayout({ children, className }: UserCardLayoutProps) {
   return (
     <Card
       className={cn(
-        'flex min-w-0 flex-col items-start justify-center gap-1 p-3',
+        'flex w-full min-w-0 flex-col items-start justify-center gap-1 p-3',
         className,
       )}
     >

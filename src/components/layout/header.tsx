@@ -8,7 +8,7 @@ export function Header({ className, ...props }: HeaderProps) {
   return (
     <header
       className={cn(
-        'flex items-center justify-between gap-2 px-4 py-3',
+        'flex flex-wrap items-center justify-between gap-2 px-4 py-3',
         className,
       )}
       {...props}

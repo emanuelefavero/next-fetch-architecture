@@ -159,5 +159,12 @@
     font-family: var(--font-system-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* Scale the entire page proportionally to fit the viewport width on 320px or less */
+    @media (max-width: 320px) {
+      min-width: 270px;
+      transform-origin: top center;
+      transform: scale(calc(100vw / 320));
+    }
   }
 }
