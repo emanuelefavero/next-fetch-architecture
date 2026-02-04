@@ -24,8 +24,6 @@ export function UserCardName({
   )
 }
 
-// ------------------------------------------------------------
-
 type UserCardEmailProps = ComponentProps<'p'>
 
 export function UserCardEmail({
@@ -45,8 +43,6 @@ export function UserCardEmail({
     </p>
   )
 }
-
-// ------------------------------------------------------------
 
 type UserCardBadgeProps = React.ComponentProps<typeof Badge>
 

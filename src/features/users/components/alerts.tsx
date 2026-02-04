@@ -1,6 +1,13 @@
 import { AlertMessage } from '@/components/shared/alert-message'
 import { AlertCircleIcon, UsersIcon } from 'lucide-react'
 
+/**
+ * Alert components for the users feature.
+ *
+ * This file contains specific alert components used in the users list,
+ * such as empty state and error alerts.
+ */
+
 export function NoUsersAlert() {
   return (
     <AlertMessage
