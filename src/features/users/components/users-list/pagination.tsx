@@ -34,6 +34,7 @@ export function Pagination({
 
   return (
     <div className='flex flex-col items-center justify-center gap-4 2xs:flex-row'>
+      {/* Prev button */}
       <Button
         onClick={() => onNavigate(currentPage - 1)}
         disabled={isPending || !hasPrevPage}
@@ -42,12 +43,16 @@ export function Pagination({
       >
         {isPending ? 'Loading...' : 'Previous'}
       </Button>
+
+      {/* Current page indicator */}
       <span className='text-sm font-medium'>
         Page{' '}
         <span className='inline-block min-w-[2ch] text-center'>
           {currentPage}
         </span>
       </span>
+
+      {/* Next button */}
       <Button
         onClick={() => onNavigate(currentPage + 1)}
         disabled={isPending || !hasNextPage}
