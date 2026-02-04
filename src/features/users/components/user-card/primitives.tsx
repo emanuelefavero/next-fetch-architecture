@@ -44,7 +44,7 @@ export function UserCardEmail({
   )
 }
 
-type UserCardBadgeProps = React.ComponentProps<typeof Badge>
+type UserCardBadgeProps = ComponentProps<typeof Badge>
 
 export function UserCardBadge({
   variant = 'secondary',

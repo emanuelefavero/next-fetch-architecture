@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
+import type { ComponentProps } from 'react'
 
-type TypographyH1Props = React.ComponentProps<'h1'>
+type TypographyH1Props = ComponentProps<'h1'>
 
 /**
  * Standard H1 heading component

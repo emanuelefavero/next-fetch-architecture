@@ -1,10 +1,11 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { cn } from '@/lib/utils'
+import type { ComponentProps, ReactNode } from 'react'
 
-type AlertVariant = React.ComponentProps<typeof Alert>['variant']
+type AlertVariant = ComponentProps<typeof Alert>['variant']
 
 type AlertMessageProps = {
-  icon?: React.ReactNode
+  icon?: ReactNode
   title: string
   description: string
   variant?: AlertVariant

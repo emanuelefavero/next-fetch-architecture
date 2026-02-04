@@ -1,9 +1,10 @@
 import { cn } from '@/lib/utils'
+import type { ReactNode } from 'react'
 
 type Speed = 'fast' | 'normal' | 'slow'
 
 type StaggeredFadeInProps = {
-  children: React.ReactNode
+  children: ReactNode
   index: number
   disabled?: boolean
   speed?: Speed

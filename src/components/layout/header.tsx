@@ -1,8 +1,9 @@
 import { TITLE } from '@/config/metadata'
 import { ModeToggle } from '@/features/theme/components/mode-toggle'
 import { cn } from '@/lib/utils'
+import type { ComponentProps } from 'react'
 
-type HeaderProps = React.ComponentProps<'header'>
+type HeaderProps = ComponentProps<'header'>
 
 export function Header({ className, ...props }: HeaderProps) {
   return (

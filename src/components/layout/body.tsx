@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
+import type { ComponentProps } from 'react'
 
-type BodyProps = React.ComponentProps<'body'>
+type BodyProps = ComponentProps<'body'>
 
 export function Body({ children, className, ...props }: BodyProps) {
   return (

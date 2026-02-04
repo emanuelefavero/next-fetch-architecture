@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
+import type { ComponentProps } from 'react'
 
-type MainProps = React.ComponentProps<'main'>
+type MainProps = ComponentProps<'main'>
 
 export function Main({ children, className, ...props }: MainProps) {
   return (

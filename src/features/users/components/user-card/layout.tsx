@@ -1,8 +1,9 @@
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import type { ReactNode } from 'react'
 
 type UserCardLayoutProps = {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }
 

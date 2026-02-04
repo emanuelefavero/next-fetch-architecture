@@ -1,9 +1,10 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import type { ReactNode } from 'react'
 
 type UsersListLayoutProps = {
-  children: React.ReactNode
+  children: ReactNode
   isPending?: boolean
 }
 
