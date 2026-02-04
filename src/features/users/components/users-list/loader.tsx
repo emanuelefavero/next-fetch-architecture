@@ -1,10 +1,9 @@
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getUsers } from '@/features/users/api'
+import { UsersLoadErrorAlert } from '@/features/users/components/alerts'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import { parseUsersSearchParams } from '@/features/users/utils'
 import { match } from '@/lib/api/result'
 import type { SearchParams } from '@/types/routing'
-import { AlertCircleIcon } from 'lucide-react'
 import { UsersList } from './list'
 
 type UsersLoaderProps = {
@@ -33,12 +32,6 @@ export async function UsersLoader({ searchParams }: UsersLoaderProps) {
     ok: (users) => (
       <UsersList users={users} currentPage={queryOptions.page ?? 1} />
     ),
-    err: (error) => (
-      <Alert variant='destructive'>
-        <AlertCircleIcon />
-        <AlertTitle>Failed to load users</AlertTitle>
-        <AlertDescription>{error.message}</AlertDescription>
-      </Alert>
-    ),
+    err: (error) => <UsersLoadErrorAlert error={error} />,
   })
 }

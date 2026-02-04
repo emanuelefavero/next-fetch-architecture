@@ -1,14 +1,13 @@
 'use client'
 
 import { StaggeredFadeIn } from '@/components/animations/staggered-fade-in'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { NoUsersAlert } from '@/features/users/components/alerts'
 import { UserCard } from '@/features/users/components/user-card/card'
 import { UserCardSkeleton } from '@/features/users/components/user-card/skeleton'
 import { USERS_PER_PAGE } from '@/features/users/config'
 import { usePaginationNavigation } from '@/features/users/hooks/usePaginationNavigation'
 import { usePaginationPrefetch } from '@/features/users/hooks/usePaginationPrefetch'
 import type { Users } from '@/features/users/types'
-import { UsersIcon } from 'lucide-react'
 import { UsersListLayout } from './layout'
 import { Pagination } from './pagination'
 
@@ -30,19 +29,9 @@ export function UsersList({ users, currentPage }: UsersListProps) {
   const { navigateToPage, isPending } = usePaginationNavigation()
   usePaginationPrefetch(currentPage) // Prefetch next and prev pages
 
-  if (users.length === 0) {
-    return (
-      <Alert>
-        <UsersIcon />
-        <AlertTitle>No users found</AlertTitle>
-        <AlertDescription>
-          There are no users to display at the moment.
-        </AlertDescription>
-      </Alert>
-    )
-  }
+  if (users.length === 0) return <NoUsersAlert /> // No users found state
 
-  // Calculate how many skeletons we need to fill the grid (if any)
+  // Calculate how many skeletons we need to fill the grid (for consistency on the last page, which might have less than USERS_PER_PAGE items)
   const skeletonsNeeded = Math.max(0, USERS_PER_PAGE - users.length)
 
   return (
