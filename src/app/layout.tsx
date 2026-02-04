@@ -1,3 +1,4 @@
+import { Body } from '@/components/layout/body'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { metadata as appMetadata } from '@/config/metadata'
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className='mx-auto w-full max-w-screen-2xl'>
+      <Body>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
@@ -26,7 +27,7 @@ export default function RootLayout({
           <Header />
           <Main>{children}</Main>
         </ThemeProvider>
-      </body>
+      </Body>
     </html>
   )
 }
