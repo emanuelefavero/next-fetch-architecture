@@ -1,4 +1,5 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { cn } from '@/lib/utils'
 
 type AlertVariant = React.ComponentProps<typeof Alert>['variant']
 
@@ -7,6 +8,7 @@ type AlertMessageProps = {
   title: string
   description: string
   variant?: AlertVariant
+  className?: string
 }
 
 /**
@@ -31,9 +33,10 @@ export function AlertMessage({
   title,
   description,
   variant = 'default',
+  className,
 }: AlertMessageProps) {
   return (
-    <Alert variant={variant}>
+    <Alert variant={variant} className={cn(className)}>
       {icon}
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{description}</AlertDescription>
