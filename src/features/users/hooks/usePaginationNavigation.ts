@@ -21,7 +21,7 @@ export function usePaginationNavigation() {
     (page: number) => {
       startTransition(() => {
         const url = buildPaginationUrl(page)
-        router.push(url)
+        router.push(url, { scroll: false })
       })
     },
     [router],
