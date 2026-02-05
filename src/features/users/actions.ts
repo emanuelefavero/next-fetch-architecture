@@ -1,6 +1,7 @@
 'use server'
 
-import { unwrapResult } from '@/lib/api/result'
+import type { Result } from '@/lib/api/result'
+import { err, ok, unwrapResult } from '@/lib/api/result'
 import {
   createUser as apiCreateUser,
   deleteUser as apiDeleteUser,
@@ -10,13 +11,30 @@ import { revalidate } from './cache'
 import type { CreateUser, UpdateUser, User, UserId } from './types'
 
 /**
- * Server Action to create a new user.
- * Calls the pure API function and revalidates the cache on success.
+ * Serializable Result type for server actions
+ * Uses string for error to ensure Next.js can serialize the response
  */
-export async function createUserAction(userData: CreateUser): Promise<User> {
-  const user = unwrapResult(await apiCreateUser(userData))
+export type ActionResult<T> = Result<T, string>
+
+/**
+ * Server Action to create a new user.
+ * Returns a serializable Result to handle errors gracefully in the UI.
+ */
+export async function createUserAction(
+  userData: CreateUser,
+): Promise<ActionResult<User>> {
+  const result = await apiCreateUser(userData)
+
+  if (!result.ok) {
+    return err(
+      result.error instanceof Error
+        ? result.error.message
+        : 'Failed to create user',
+    )
+  }
+
   revalidate.users()
-  return user
+  return ok(result.data)
 }
 
 /**
