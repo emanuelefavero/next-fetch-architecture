@@ -112,8 +112,10 @@ export default function CreateUserForm() {
                 {...field}
                 id={field.name}
                 type='number'
+                inputMode='numeric'
+                pattern='[0-9]*'
                 aria-invalid={fieldState.invalid}
-                placeholder='25'
+                placeholder='Enter age (1-99)'
                 min={1}
                 max={99}
                 onChange={(e) => {
