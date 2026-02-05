@@ -33,12 +33,12 @@ export const UserSchema = z.object({
   // Email address: ensures valid email format
   email: z.email({ message: 'Invalid email address' }),
 
-  // Age: integer between 0 and 150
+  // Age: integer between 1 and 99
   age: z
     .number()
     .int()
-    .min(0, 'Age must be at least 0')
-    .max(150, 'Age must be at most 150'),
+    .min(1, 'Age must be at least 1')
+    .max(99, 'Age must be at most 99'),
 })
 
 /**

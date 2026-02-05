@@ -26,7 +26,7 @@ export default function CreateUserForm() {
     defaultValues: {
       name: '',
       email: '',
-      age: 0,
+      age: 1,
     },
   })
 
@@ -113,12 +113,15 @@ export default function CreateUserForm() {
                 id={field.name}
                 type='number'
                 aria-invalid={fieldState.invalid}
-                placeholder='30'
-                min={0}
-                max={150}
-                onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                placeholder='25'
+                min={1}
+                max={99}
+                onChange={(e) => {
+                  const value = e.target.valueAsNumber
+                  field.onChange(isNaN(value) ? 1 : value)
+                }}
               />
-              <FieldDescription>Age (0-150 years)</FieldDescription>
+              <FieldDescription>Age (1-99 years)</FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
