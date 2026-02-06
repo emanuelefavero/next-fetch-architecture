@@ -24,11 +24,8 @@ export const UserSchema = z.object({
     .string()
     .trim()
     .min(1, 'Name is required')
-    .max(100, 'Name must be at most 100 characters')
-    .regex(
-      /^[a-zA-Z0-9\s\-'.]+$/,
-      'Name must contain only letters, numbers, spaces, hyphens, apostrophes, and periods',
-    ),
+    .max(100, 'Name has too many characters')
+    .regex(/^[a-zA-Z0-9\s\-'.]+$/, 'Name has invalid characters'),
 
   // Email address: ensures valid email format
   email: z.email({ message: 'Invalid email address' }),

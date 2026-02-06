@@ -51,11 +51,11 @@ export default function CreateUserForm() {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className='mb-8 rounded-lg border border-border bg-card p-6 shadow-sm'
+      className='space-y-4 rounded-lg border border-border bg-card p-6 shadow-sm'
     >
-      <h2 className='mb-6 text-lg font-semibold'>Create New User</h2>
+      <h2 className='text-lg font-semibold'>Create New User</h2>
 
-      <div className='space-y-4'>
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
         {/* Name Field */}
         <Controller
           name='name'
