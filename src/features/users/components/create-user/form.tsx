@@ -69,10 +69,11 @@ export default function CreateUserForm() {
                 placeholder='John Doe'
                 autoComplete='name'
               />
-              <FieldDescription>
-                Full name (1-100 characters, letters, numbers, spaces, hyphens,
-                apostrophes, periods)
-              </FieldDescription>
+              {!fieldState.invalid && (
+                <FieldDescription>
+                  Full user name (1-100 chars)
+                </FieldDescription>
+              )}
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -93,9 +94,9 @@ export default function CreateUserForm() {
                 placeholder='john.doe@example.com'
                 autoComplete='email'
               />
-              <FieldDescription>
-                Valid email address for the user
-              </FieldDescription>
+              {!fieldState.invalid && (
+                <FieldDescription>Valid email address</FieldDescription>
+              )}
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -123,7 +124,9 @@ export default function CreateUserForm() {
                   field.onChange(isNaN(value) ? 1 : value)
                 }}
               />
-              <FieldDescription>Age (1-99 years)</FieldDescription>
+              {!fieldState.invalid && (
+                <FieldDescription>Age (1-99 years)</FieldDescription>
+              )}
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
