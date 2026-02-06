@@ -158,35 +158,40 @@ export default function CreateUserForm() {
         />
       </div>
 
-      {/* Server Error */}
-      {submitError && (
-        <div
-          role='alert'
-          className='mt-4 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive'
-        >
-          {submitError}
+      {/* Bottom Section: Error and Actions */}
+      <div className='flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between'>
+        {/* Error Section: Reserve space on desktop */}
+        <div className='min-h-5 flex-1'>
+          {submitError && (
+            <div role='alert' className='text-sm text-destructive'>
+              {submitError}
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Form Actions */}
-      <div className='mt-6 flex gap-3'>
-        <Button
-          type='submit'
-          disabled={isSubmitting || !form.formState.isValid}
-        >
-          {isSubmitting ? 'Creating...' : 'Create User'}
-        </Button>
-        <Button
-          type='button'
-          variant='outline'
-          onClick={() => {
-            form.reset()
-            setSubmitError(null)
-          }}
-          disabled={isSubmitting || form.formState.isDirty === false}
-        >
-          Reset
-        </Button>
+        {/* Actions Section: Right-aligned */}
+        <div className='flex gap-3 md:justify-end'>
+          <Button
+            type='submit'
+            variant={
+              submitError && !form.formState.isValid ? 'destructive' : 'default'
+            }
+            disabled={isSubmitting || !form.formState.isValid}
+          >
+            {isSubmitting ? 'Creating...' : 'Create User'}
+          </Button>
+          <Button
+            type='button'
+            variant='outline'
+            onClick={() => {
+              form.reset()
+              setSubmitError(null)
+            }}
+            disabled={isSubmitting || form.formState.isDirty === false}
+          >
+            Reset
+          </Button>
+        </div>
       </div>
     </form>
   )
