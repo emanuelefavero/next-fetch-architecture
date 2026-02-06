@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { CheckIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
@@ -22,11 +23,11 @@ export default function CreateUserForm() {
 
   const form = useForm<CreateUser>({
     resolver: zodResolver(CreateUserSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       name: '',
       email: '',
-      age: 1,
+      age: 30,
     },
   })
 
@@ -61,7 +62,15 @@ export default function CreateUserForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Name{' '}
+                {fieldState.isDirty && !fieldState.invalid && (
+                  <CheckIcon
+                    className='inline-block h-4 w-4 text-green-600 dark:text-green-400'
+                    aria-hidden='true'
+                  />
+                )}
+              </FieldLabel>
               <Input
                 {...field}
                 id={field.name}
@@ -85,7 +94,15 @@ export default function CreateUserForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Email{' '}
+                {fieldState.isDirty && !fieldState.invalid && (
+                  <CheckIcon
+                    className='inline-block h-4 w-4 text-green-600 dark:text-green-400'
+                    aria-hidden='true'
+                  />
+                )}
+              </FieldLabel>
               <Input
                 {...field}
                 id={field.name}
@@ -108,7 +125,15 @@ export default function CreateUserForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Age</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Age{' '}
+                {!fieldState.invalid && (
+                  <CheckIcon
+                    className='inline-block h-4 w-4 text-green-600 dark:text-green-400'
+                    aria-hidden='true'
+                  />
+                )}
+              </FieldLabel>
               <Input
                 {...field}
                 id={field.name}
