@@ -145,7 +145,10 @@ export default function CreateUserForm() {
 
       {/* Form Actions */}
       <div className='mt-6 flex gap-3'>
-        <Button type='submit' disabled={isSubmitting}>
+        <Button
+          type='submit'
+          disabled={isSubmitting || !form.formState.isValid}
+        >
           {isSubmitting ? 'Creating...' : 'Create User'}
         </Button>
         <Button
@@ -155,7 +158,7 @@ export default function CreateUserForm() {
             form.reset()
             setSubmitError(null)
           }}
-          disabled={isSubmitting}
+          disabled={isSubmitting || form.formState.isDirty === false}
         >
           Reset
         </Button>
