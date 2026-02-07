@@ -206,7 +206,7 @@ export default function CreateUserForm() {
           </Button>
 
           {/* Reset/Undo buttons */}
-          {undoData ? (
+          {undoData && !form.formState.isDirty ? (
             <Button
               type='button'
               variant='outline'
