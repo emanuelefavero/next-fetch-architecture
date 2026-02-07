@@ -20,18 +20,41 @@ import type { CreateUser } from '@/features/users/types'
 export default function CreateUserForm() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [backupData, setBackupData] = useState<CreateUser | null>(null)
 
+  // Define default form values
+  const defaultValues: CreateUser = {
+    name: '',
+    email: '',
+    age: 30,
+  }
+
+  // Initialize react-hook-form with zod validation and default values
   const form = useForm<CreateUser>({
     resolver: zodResolver(CreateUserSchema),
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      email: '',
-      age: 30,
-    },
+    defaultValues,
   })
 
-  async function onSubmit(data: CreateUser) {
+  const handleReset = () => {
+    // Backup current values before resetting
+    const currentValues = form.getValues()
+    setBackupData(currentValues)
+
+    // Reset form to original default values and clear any submit errors
+    form.reset(defaultValues)
+    setSubmitError(null)
+  }
+
+  const handleRestore = () => {
+    if (!backupData) return
+
+    // Restore form to backed-up values and clear backup data
+    form.reset(backupData)
+    setBackupData(null)
+  }
+
+  const onSubmit = async (data: CreateUser) => {
     setIsSubmitting(true)
     setSubmitError(null)
 
@@ -43,8 +66,8 @@ export default function CreateUserForm() {
       return
     }
 
-    // Success: reset form
-    form.reset()
+    // Success: reset form to original defaults
+    form.reset(defaultValues)
     setIsSubmitting(false)
   }
 
@@ -171,6 +194,7 @@ export default function CreateUserForm() {
 
         {/* Actions Section: Right-aligned */}
         <div className='flex gap-3 md:justify-end'>
+          {/* Create User Button (Submit) */}
           <Button
             type='submit'
             variant={
@@ -180,17 +204,27 @@ export default function CreateUserForm() {
           >
             {isSubmitting ? 'Creating...' : 'Create User'}
           </Button>
-          <Button
-            type='button'
-            variant='outline'
-            onClick={() => {
-              form.reset()
-              setSubmitError(null)
-            }}
-            disabled={isSubmitting || form.formState.isDirty === false}
-          >
-            Reset
-          </Button>
+
+          {/* Reset/Restore buttons */}
+          {backupData ? (
+            <Button
+              type='button'
+              variant='outline'
+              onClick={handleRestore}
+              disabled={isSubmitting}
+            >
+              Restore
+            </Button>
+          ) : (
+            <Button
+              type='button'
+              variant='secondary'
+              onClick={handleReset}
+              disabled={isSubmitting || !form.formState.isDirty}
+            >
+              Reset
+            </Button>
+          )}
         </div>
       </div>
     </form>
