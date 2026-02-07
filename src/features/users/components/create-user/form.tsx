@@ -20,7 +20,7 @@ import type { CreateUser } from '@/features/users/types'
 export default function CreateUserForm() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [backupData, setBackupData] = useState<CreateUser | null>(null)
+  const [undoData, setUndoData] = useState<CreateUser | null>(null)
 
   // Define default form values
   const defaultValues: CreateUser = {
@@ -39,19 +39,19 @@ export default function CreateUserForm() {
   const handleReset = () => {
     // Backup current values before resetting
     const currentValues = form.getValues()
-    setBackupData(currentValues)
+    setUndoData(currentValues)
 
     // Reset form to original default values and clear any submit errors
     form.reset(defaultValues)
     setSubmitError(null)
   }
 
-  const handleRestore = () => {
-    if (!backupData) return
+  const handleUndo = () => {
+    if (!undoData) return
 
-    // Restore form to backed-up values and clear backup data
-    form.reset(backupData)
-    setBackupData(null)
+    // Restore form to backed-up values and clear undo data
+    form.reset(undoData)
+    setUndoData(null)
   }
 
   const onSubmit = async (data: CreateUser) => {
@@ -205,15 +205,16 @@ export default function CreateUserForm() {
             {isSubmitting ? 'Creating...' : 'Create User'}
           </Button>
 
-          {/* Reset/Restore buttons */}
-          {backupData ? (
+          {/* Reset/Undo buttons */}
+          {undoData ? (
             <Button
               type='button'
               variant='outline'
-              onClick={handleRestore}
+              onClick={handleUndo}
               disabled={isSubmitting}
+              className='min-w-18'
             >
-              Restore
+              Undo
             </Button>
           ) : (
             <Button
@@ -221,6 +222,7 @@ export default function CreateUserForm() {
               variant='secondary'
               onClick={handleReset}
               disabled={isSubmitting || !form.formState.isDirty}
+              className='min-w-18'
             >
               Reset
             </Button>
